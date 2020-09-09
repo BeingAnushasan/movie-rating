@@ -59,4 +59,9 @@ public class MovieServiceImpl implements MovieService {
     public void delete( Long id ){
         movieRepo.deleteById( id );
     }
+
+    @Override
+    public void deleteAll(){
+        movieRepo.deleteAll();
+    }
 }
