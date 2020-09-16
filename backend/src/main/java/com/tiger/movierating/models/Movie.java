@@ -20,10 +20,10 @@ public class Movie {
    @GeneratedValue
    private Long id;
 
-   private String title;
+   private String movieName;
 
    @ElementCollection
-   private List<Genre> genre;
+   public List<String> genre = null;
 
    private String releaseYear;
    private String timeLength;
@@ -31,8 +31,8 @@ public class Movie {
    private String director;
    @ElementCollection
    private List<String> mainActors;
-   private double myRating;
+   private String rating;
    private double imdbRating;
-   private String briefDescription;
+   private String description;
 
 }

@@ -28,16 +28,16 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> findAll(){
         System.out.println( "In the service impl part before list creation" );
-        List<Movie> listOfNewMovies = new ArrayList<>();
-        listOfNewMovies.add(
-                new Movie( 111111000L, "Ek Tha tiger", List.of(Genre.ACTION, Genre.ROMANCE, Genre.DRAMA) ,"2013", "2hr 45min", "Hindi", "Rohit Shetty",
-                        List.of( "Salman Khan", "Katrina Kaif" ), 8.5, 7.5, "A action movie of Salman Khan" ) );
-        listOfNewMovies.add(
-                new Movie( 1111110001L, "Ek Tha tiger 2", List.of(Genre.ACTION, Genre.ROMANCE) , "2018", "2hr 45min", "Hindi", "Rohit Shetty",
-                        List.of( "Salman Khan", "idk " ), 8.0, 7.0, "A action movie of Salman Khan" ) );
-
-        listOfNewMovies.stream().forEach( movieRepo::save );
-        
+//        List<Movie> listOfNewMovies = new ArrayList<>();
+//        listOfNewMovies.add(
+//                new Movie( 111111000L, "Ek Tha tiger", List.of(Genre.ACTION, Genre.ROMANCE, Genre.DRAMA) ,"2013", "2hr 45min", "Hindi", "Rohit Shetty",
+//                        List.of( "Salman Khan", "Katrina Kaif" ), 8.5, 7.5, "A action movie of Salman Khan" ) );
+//        listOfNewMovies.add(
+//                new Movie( 1111110001L, "Ek Tha tiger 2", List.of(Genre.ACTION, Genre.ROMANCE) , "2018", "2hr 45min", "Hindi", "Rohit Shetty",
+//                        List.of( "Salman Khan", "idk " ), 8.0, 7.0, "A action movie of Salman Khan" ) );
+//
+//        listOfNewMovies.stream().forEach( movieRepo::save );
+//
         System.out.println( "In the service impl part" );
         return movieRepo.findAll();
     }

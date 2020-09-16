@@ -1,7 +1,11 @@
 package com.tiger.movierating.controllers;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.tiger.movierating.models.Movie;
+import com.tiger.movierating.models.TestMovie;
 import com.tiger.movierating.services.MovieServiceImpl;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +25,15 @@ public class BasicMovieController {
         return movieService.findAll();
     }
 
+//    @PostMapping("/test")
+//    public void printReceivedData( @RequestBody Map<String, Object> payload ) throws Exception{
+//        System.out.println( payload );
+//    }
+
     @PostMapping("/test")
-    public void printReceivedData( @RequestBody Map<String, Object> payload ) throws Exception{
-        System.out.println( payload );
+    public void printReceivedData( @RequestBody Movie payload ) throws Exception{
+        System.out.println( "Saving to Database"+payload );
+        movieService.create( payload );
     }
 
     @GetMapping("/deletemovie")
