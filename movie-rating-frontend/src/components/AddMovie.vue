@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="addmovie">
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group
         id="input-group-1"
@@ -9,6 +9,7 @@
       >
         <b-form-input
           id="input-1"
+          class="mb-2 mr-sm-2 mb-sm-0"
           v-model="form.movieName"
           type="text"
           required
@@ -48,9 +49,12 @@
       <b-button type="submit" variant="primary">Add To Libary</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
-    <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card>
+    <div class="mt-3">
+      <b-button  size="sm" variant="primary" @click="showJSON">Show JSON</b-button>
+      <b-card  header="Form Data Result" v-if="showJSONBool">
+        <pre class="m-0">{{ form }}</pre>
+      </b-card>
+    </div>
   </div>
 </template>
 
@@ -69,9 +73,15 @@ export default {
       },
       ratings: [{ text: "Your Rating", value: null }, "1", "2", "3", "4", "5"],
       show: true,
+      showJSONBool: false,
     };
   },
   methods: {
+    showJSON(evt) {
+      evt.preventDefault();
+      this.showJSONBool = !this.showJSONBool;
+    },
+
     onSubmit(evt) {
       evt.preventDefault();
       axios.post("http://localhost:8085/test", this.form, {
@@ -79,7 +89,7 @@ export default {
           "Content-Type": "application/json",
         },
       });
-    //   alert(JSON.stringify(this.form));
+      //   alert(JSON.stringify(this.form));
     },
     onReset(evt) {
       evt.preventDefault();

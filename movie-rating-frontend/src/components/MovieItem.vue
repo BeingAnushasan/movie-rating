@@ -4,7 +4,7 @@
     <input type="text" placeholder="Search" v-model="searchName" />
     <b-button size="sm" @click="searchByName">Search</b-button>
     <ul>
-      <li>{{ movieName }}</li>
+      <li v-for="movie in movies" :key="movie.id">{{ movie.movieName }}</li>
     </ul>
   </div>
 </template>
@@ -16,8 +16,9 @@ export default {
 
   data: function() {
     return {
-      list: null,
-      movieName: null,
+      
+      movies: null,
+      // movieName: null,
       searchName: null,
     };
   },
@@ -25,9 +26,11 @@ export default {
   methods: {
     searchByName: function() {
       axios
-        .get("http://www.omdbapi.com/?t=" + this.searchName + "&apikey=113170")
+        .get("http://localhost:8085/movie")
         //  .then(response => console.log(response))
-        .then((response) => (this.movieName = response.data));
+        .then((response) => (this.movies = response.data))
+        .then(console.log(this.movies));
+        
     },
   },
 };
