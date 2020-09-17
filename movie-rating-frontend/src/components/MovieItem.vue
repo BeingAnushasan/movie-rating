@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "MovieItem",
 
@@ -23,10 +22,15 @@ export default {
     };
   },
 
+  mounted() {
+    this.$axios.get("http://localhost:8085/movie")
+        //  .then(response => console.log(response))
+        .then((response) => (this.movies = response.data))
+  },
+
   methods: {
     searchByName: function() {
-      axios
-        .get("http://localhost:8085/movie")
+      this.$axios.get("http://localhost:8085/movie")
         //  .then(response => console.log(response))
         .then((response) => (this.movies = response.data))
         .then(console.log(this.movies));

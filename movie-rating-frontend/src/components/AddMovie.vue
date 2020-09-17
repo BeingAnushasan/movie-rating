@@ -1,5 +1,10 @@
 <template>
   <div id="addmovie">
+    <input type="text" placeholder="Search" v-model="searchName" />
+    <b-button size="sm" @click="searchByName">Search</b-button>
+    <ul>
+      <li @click="fillTheForm(movie, $event)" v-for="movie in searchResponseMovie" :key="movie.id">{{ movie.title }} : {{movie.release_date}}</li>
+    </ul>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group
         id="input-group-1"
@@ -37,6 +42,11 @@
 
       <b-form-group id="input-group-4" label="Genre:">
         <b-form-checkbox-group v-model="form.genre" id="checkboxes-4">
+          <!-- <b-form-checkbox
+            v-for="genre in genres"
+            value="genre.value"
+            :key="genre.id"
+            >{{ genre.value }}</b-form-checkbox> -->
           <b-form-checkbox value="Action">Action</b-form-checkbox>
           <b-form-checkbox value="Drama">Drama</b-form-checkbox>
           <b-form-checkbox value="Romance">Romance</b-form-checkbox>
@@ -50,8 +60,10 @@
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
     <div class="mt-3">
-      <b-button  size="sm" variant="primary" @click="showJSON">Show JSON</b-button>
-      <b-card  header="Form Data Result" v-if="showJSONBool">
+      <b-button size="sm" variant="primary" @click="showJSON"
+        >Show JSON</b-button
+      >
+      <b-card header="Form Data Result" v-if="showJSONBool">
         <pre class="m-0">{{ form }}</pre>
       </b-card>
     </div>
@@ -59,7 +71,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "AddMovie",
@@ -71,9 +83,13 @@ export default {
         rating: null,
         genre: [],
       },
+      // genres: [{id:1, value: "Action"} , "Drama", "Romance", "Comedy", "Horror", "Si-fi"],
+      // genres: [{id:1, value: "Action"} , {id:2, value: "Drama"} , {id:3, value: "Romance"} , {id:4, value: "Comedy"} , {id:6, value: "Horror"} , {id:6, value: "Si-fi"} ],
       ratings: [{ text: "Your Rating", value: null }, "1", "2", "3", "4", "5"],
       show: true,
       showJSONBool: false,
+      searchName: null,
+      searchResponseMovie: [],
     };
   },
   methods: {
@@ -81,15 +97,27 @@ export default {
       evt.preventDefault();
       this.showJSONBool = !this.showJSONBool;
     },
+    fillTheForm(movie, evt) {
+      evt.preventDefault();
+      this.form.movieName = movie.title;
+      this.form.description = movie.overview;
+
+    },
+    searchByName() {
+        this.$axios.get("https://api.themoviedb.org/3/search/movie?api_key=f69685ff175d2d4f542c2d6001185d43&query="+this.searchName)
+              .then((response) => (this.searchResponseMovie = response.data.results))
+              // .then(this.form.movieName = this.searchResponseMovie.Title);
+    },
+    
 
     onSubmit(evt) {
       evt.preventDefault();
-      axios.post("http://localhost:8085/test", this.form, {
+      this.$axios.post("http://localhost:8085/test", this.form, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      //   alert(JSON.stringify(this.form));
+      alert(this.form);
     },
     onReset(evt) {
       evt.preventDefault();
