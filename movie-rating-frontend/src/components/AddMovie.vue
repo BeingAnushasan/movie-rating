@@ -1,6 +1,6 @@
 <template>
   <div id="addmovie">
-    <input type="text" placeholder="Search" v-model="searchName" />
+    <input type="text" placeholder="Search" v-model="searchName" @change="searchByName" />
     <b-button size="sm" @click="searchByName">Search</b-button>
     <ul>
       <li @click="fillTheForm(movie, $event)" v-for="movie in searchResponseMovie" :key="movie.id">{{ movie.title }} : {{movie.release_date}}</li>
@@ -112,12 +112,12 @@ export default {
 
     onSubmit(evt) {
       evt.preventDefault();
-      this.$axios.post("http://localhost:8085/test", this.form, {
+      this.$axios.post("http://192.168.1.12:8085/test", this.form, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      alert(this.form);
+      
     },
     onReset(evt) {
       evt.preventDefault();
