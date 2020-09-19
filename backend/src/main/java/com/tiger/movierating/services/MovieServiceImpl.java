@@ -1,18 +1,14 @@
 package com.tiger.movierating.services;
 
-import com.tiger.movierating.models.Genre;
 import com.tiger.movierating.models.Movie;
 import com.tiger.movierating.repos.MovieRepo;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MovieServiceImpl implements MovieService {
+public class MovieServiceImpl  {
     final MovieRepo movieRepo;
 
     public MovieServiceImpl( MovieRepo movieRepo ){
@@ -20,12 +16,10 @@ public class MovieServiceImpl implements MovieService {
     }
 
 
-    @Override
     public Movie create( Movie movie ){
         return movieRepo.save( movie );
     }
 
-    @Override
     public List<Movie> findAll(){
         System.out.println( "In the service impl part before list creation" );
 //        List<Movie> listOfNewMovies = new ArrayList<>();
@@ -42,12 +36,10 @@ public class MovieServiceImpl implements MovieService {
         return movieRepo.findAll();
     }
 
-    @Override
     public Optional<Movie> findOneByID( Long id ){
         return movieRepo.findById( id );
     }
 
-    @Override
     public Movie update( Long id, Movie movie ){
         if (movieRepo.existsById( id )) {
             movie.setId( id );
@@ -55,13 +47,17 @@ public class MovieServiceImpl implements MovieService {
         } else return movie;
     }
 
-    @Override
     public void delete( Long id ){
         movieRepo.deleteById( id );
     }
 
-    @Override
     public void deleteAll(){
         movieRepo.deleteAll();
     }
+
+    public List<Movie> findByGenre( String genre ){
+        return movieRepo.findByGenre( genre );
+    }
+
+
 }

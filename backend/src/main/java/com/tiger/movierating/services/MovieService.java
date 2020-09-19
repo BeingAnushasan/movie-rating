@@ -1,7 +1,6 @@
 package com.tiger.movierating.services;
 
 import com.tiger.movierating.models.Movie;
-import org.springframework.http.ResponseEntity;
 
 
 import java.util.List;
@@ -20,4 +19,5 @@ public interface MovieService {
     void deleteAll();
 
 
+    List<Movie> findByGenre( int rating );
 }

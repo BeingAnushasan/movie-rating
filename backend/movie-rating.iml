@@ -91,6 +91,9 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-web:5.2.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:5.2.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.2.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.14" level="project" />
     <orderEntry type="library" name="Maven: io.nats:jnats:2.6.8" level="project" />
     <orderEntry type="library" name="Maven: net.i2p.crypto:eddsa:0.3.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: mysql:mysql-connector-java:8.0.21" level="project" />

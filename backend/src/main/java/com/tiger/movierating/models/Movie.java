@@ -29,6 +29,7 @@ public class Movie {
    private String timeLength;
    private String language;
    private String director;
+
    @ElementCollection
    private List<String> mainActors;
    private String rating;

@@ -1,12 +1,7 @@
 package com.tiger.movierating.controllers;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.tiger.movierating.models.Movie;
-import com.tiger.movierating.models.TestMovie;
 import com.tiger.movierating.services.MovieServiceImpl;
-import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,29 +11,35 @@ import java.util.Map;
 @CrossOrigin
 public class BasicMovieController {
 
-    @Autowired
-    MovieServiceImpl movieService;
+    final MovieServiceImpl movieService;
+    public BasicMovieController( MovieServiceImpl movieService ){
+        this.movieService = movieService;
+    }
 
     @GetMapping("/movie")
     public List<Movie> getAllMovies(){
-//        System.out.println( "In the controller part" );
-        return movieService.findAll();
+        List<Movie> movieList = movieService.findAll();
+        return movieList;
     }
 
-//    @PostMapping("/test")
-//    public void printReceivedData( @RequestBody Map<String, Object> payload ) throws Exception{
-//        System.out.println( payload );
-//    }
-
-    @PostMapping("/test")
-    public void printReceivedData( @RequestBody Movie payload ) throws Exception{
-        System.out.println( "Saving to Database"+payload );
+    @PostMapping("/movie")
+    public void printReceivedData( @RequestBody Movie payload ){
+        System.out.println( "Saving to Database" + payload );
         movieService.create( payload );
+    }
+
+    @GetMapping("/search")
+    public List<Movie> searchByGenre( @RequestParam Map<String, String> requestParams ){
+        String name = requestParams.get( "name" );
+        String genre = requestParams.get( "genre" );
+        System.out.println( "Name:" + name + "   Genre:" + genre );
+        return movieService.findByGenre( genre );
     }
 
     @GetMapping("/deletemovie")
     public void deleteAllMovies(){
         movieService.deleteAll();
     }
+
 
 }
