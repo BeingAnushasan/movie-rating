@@ -35,5 +35,6 @@ public class Movie {
    private String rating;
    private double imdbRating;
    private String description;
+   private String posterLink;
 
 }
