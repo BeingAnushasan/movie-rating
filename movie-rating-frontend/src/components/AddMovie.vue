@@ -1,17 +1,26 @@
 <template>
   <div id="addmovie">
-    <input type="text" placeholder="Search" v-model="searchName" @change="searchByName" />
-    <b-button size="sm" @click="searchByName">Search</b-button>
-    <ul>
-      <li @click="fillTheForm(movie, $event)" v-for="movie in searchResponseMovie" :key="movie.id">{{ movie.title }} : {{movie.release_date}}</li>
-    </ul>
+    <div class="search">
+      <input
+        type="text"
+        placeholder="Search"
+        v-model="searchName"
+        @input="searchByName"
+      />
+      <b-button type="submit" @click="searchByName">Search</b-button>
+
+      <ul>
+        <li
+          @click="fillTheForm(movie, $event)"
+          v-for="movie in searchResponseMovie.slice(0, 5)"
+          :key="movie.id"
+        >
+          {{ movie.title }} : {{ movie.release_date }}
+        </li>
+      </ul>
+    </div>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group
-        id="input-group-1"
-        label="Movie Name:"
-        label-for="input-1"
-        description=""
-      >
+      <b-form-group id="input-group-1" label-for="input-1" description="">
         <b-form-input
           id="input-1"
           class="mb-2 mr-sm-2 mb-sm-0"
@@ -52,6 +61,7 @@
           <b-form-checkbox value="Romance">Romance</b-form-checkbox>
           <b-form-checkbox value="Comedy">Comedy</b-form-checkbox>
           <b-form-checkbox value="Horror">Horror</b-form-checkbox>
+          <b-form-checkbox value="Thriller">Thriller</b-form-checkbox>
           <b-form-checkbox value="Si-fi">Si-fi</b-form-checkbox>
         </b-form-checkbox-group>
       </b-form-group>
@@ -81,10 +91,11 @@ export default {
         movieName: "",
         description: "",
         rating: null,
+        posterLink: null,
         genre: [],
       },
       // genres: [{id:1, value: "Action"} , "Drama", "Romance", "Comedy", "Horror", "Si-fi"],
-      // genres: [{id:1, value: "Action"} , {id:2, value: "Drama"} , {id:3, value: "Romance"} , {id:4, value: "Comedy"} , {id:6, value: "Horror"} , {id:6, value: "Si-fi"} ],
+      // genres: [{id:1, value: "Action"} 33, {id:2, value: "Drama"} , {id:3, value: "Romance"} , {id:4, value: "Comedy"} , {id:6, value: "Horror"} , {id:6, value: "Si-fi"} ],
       ratings: [{ text: "Your Rating", value: null }, "1", "2", "3", "4", "5"],
       show: true,
       showJSONBool: false,
@@ -100,24 +111,26 @@ export default {
     fillTheForm(movie, evt) {
       evt.preventDefault();
       this.form.movieName = movie.title;
-      this.form.description = movie.overview;
-
+      this.form.description = movie.overview.substring(0, 255);
+      this.form.posterLink = movie.poster_path;
     },
     searchByName() {
-        this.$axios.get("https://api.themoviedb.org/3/search/movie?api_key=f69685ff175d2d4f542c2d6001185d43&query="+this.searchName)
-              .then((response) => (this.searchResponseMovie = response.data.results))
-              // .then(this.form.movieName = this.searchResponseMovie.Title);
+      this.$axios
+        .get(
+          "https://api.themoviedb.org/3/search/movie?api_key=f69685ff175d2d4f542c2d6001185d43&page=1&query=" +
+            this.searchName
+        )
+        .then((response) => (this.searchResponseMovie = response.data.results));
+      // .then(this.form.movieName = this.searchResponseMovie.Title);
     },
-    
 
     onSubmit(evt) {
       evt.preventDefault();
-      this.$axios.post("http://192.168.1.12:8085/test", this.form, {
+      this.$axios.post("http://192.168.1.13:8085/movie", this.form, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      
     },
     onReset(evt) {
       evt.preventDefault();
@@ -126,6 +139,7 @@ export default {
       this.form.description = "";
       this.form.rating = null;
       this.form.genre = [];
+      this.searchResponseMovie = [];
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
@@ -135,3 +149,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.dropdown-list {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+</style>
