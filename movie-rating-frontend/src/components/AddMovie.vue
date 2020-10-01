@@ -150,11 +150,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.dropdown-list {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-}
-</style>
+<style scoped></style>
