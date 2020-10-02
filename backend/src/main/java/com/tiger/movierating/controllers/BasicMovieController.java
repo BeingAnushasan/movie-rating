@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @CrossOrigin
@@ -29,11 +32,13 @@ public class BasicMovieController {
     }
 
     @GetMapping("/search")
-    public List<Movie> searchByGenre( @RequestParam Map<String, String> requestParams ){
+    public Set<Movie> searchByGenre( @RequestParam Map<String, String> requestParams ){
         String name = requestParams.get( "name" );
         String genre = requestParams.get( "genre" );
         System.out.println( "Name:" + name + "   Genre:" + genre );
-        return movieService.findByGenre( genre );
+        List<Movie> byName = movieService.findByName( name );
+        List<Movie> byGenre = movieService.findByGenre( genre );
+        return Stream.concat( byName.stream(), byGenre.stream() ).collect( Collectors.toSet() );
     }
 
     @GetMapping("/deletemovie")

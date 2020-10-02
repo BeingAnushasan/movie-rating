@@ -60,4 +60,7 @@ public class MovieServiceImpl  {
     }
 
 
+    public List<Movie> findByName( String name ){
+        return movieRepo.findByMovieName(name);
+    }
 }
