@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <MovieDetails v-if="showMovieDetails" v-bind:movie="movieInsideDetails" @showMovieLibrary="showMovieDetailsFunction"/>
     <MovieLibrary
       v-if="showMovieLibrary"

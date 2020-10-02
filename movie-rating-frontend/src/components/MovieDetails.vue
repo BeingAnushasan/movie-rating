@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="container">
     <h1>
-      <strong>{{ this.movieInsideDetails.movieName }}</strong
+      <strong style="text-decoration-color: blue">{{ this.movieInsideDetails.movieName }}</strong
       >/ <strong>{{ this.movieInsideDetails.rating }}</strong>
     </h1>
 

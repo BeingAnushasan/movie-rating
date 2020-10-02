@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <h1>Add Movie</h1>
-    <AddMovie/>
+    <AddMovie  class="container"/>
   </div>
 </template>
 

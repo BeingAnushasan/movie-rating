@@ -1,5 +1,6 @@
-<template>
-  <div id="addmovie">
+<template >
+  <div id="addmovie" >
+    <h1 id="textTop">Add Movie To Library</h1>
     <div class="search">
       <input
         type="text"
@@ -150,4 +151,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#addmovie {
+  text-align: center;
+}
+
+#textTop {
+text-decoration: blue;
+}
+
+</style>

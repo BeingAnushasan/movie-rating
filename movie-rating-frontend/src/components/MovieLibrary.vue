@@ -1,30 +1,25 @@
-<template>
-  <div>
+3<template>
+  <div class="container" style="text-align: center">
     <h1>Movie Library</h1>
     <!-- <div>
       <input type="text" placeholder="Search By Name" v-model="searchName" />
       <b-button size="sm" @click="searchByName">Search By Name</b-button>
     </div> -->
-    <div>
-      <!-- <input
-        type="text"
-        placeholder="Search By Genre"
-        v-model="searchGenreName"
-      /> -->
-      <!-- <b-button size="sm" @click="searchByGenre">Search By Genre</b-button> -->
-    </div>
-    <div>
-      <b-form
-        inline
-        label="Genre:"
-        label-for="input-1"
-        class="mb-2 mr-sm-2 mb-sm-0"
-      >
-        <input type="text" placeholder="Search By Name" v-model="searchName" />
+    
+
+    <div class="container">
+      <b-form inline label="Genre:" label-for="input-1">
+        <input
+          type="text"
+          placeholder="Search By Name"
+          v-model="searchName"
+          @input="searchByName"
+        />
 
         <b-form-select
           v-model="searchGenreName"
           :options="genres"
+          calss="mb-3"
         ></b-form-select>
         <b-button size="sm" @click="searchByGenre">Search</b-button>
       </b-form>
@@ -58,12 +53,12 @@ export default {
       movies: null,
       genres: [
         { text: "Genre", value: null },
-        "Action",
-        "Drama",
-        "Romance",
-        "Comedy",
-        "Horror",
-        "Si-fi",
+        { text: "Action", value: "Action" },
+        { text: "Drama", value: "Drama" },
+        { text: "Romance", value: "Romance" },
+        { text: "Comedy", value: "Comedy" },
+        { text: "Horror", value: "Horror" },
+        { text: "Si-fi", value: "Si-fi" },
       ],
 
       searchName: null,
@@ -91,6 +86,8 @@ export default {
             this.searchName
         )
         .then((response) => (this.movies = response.data));
+      this.searchName = "";
+      this.searchGenreName = "";
     },
 
     showMovieDetailsFunction(movie) {
@@ -99,3 +96,5 @@ export default {
   },
 };
 </script>
+
+<style scoped></style>
