@@ -63,4 +63,8 @@ public class MovieServiceImpl  {
     public List<Movie> findByName( String name ){
         return movieRepo.findByMovieName(name);
     }
+
+    public void deleteByID( Long id ){
+        movieRepo.deleteById( id );
+    }
 }

@@ -41,9 +41,10 @@ public class BasicMovieController {
         return Stream.concat( byName.stream(), byGenre.stream() ).collect( Collectors.toSet() );
     }
 
-    @GetMapping("/deletemovie")
-    public void deleteAllMovies(){
-        movieService.deleteAll();
+    @DeleteMapping("/movie/{id}")
+    public void deleteMovie(@PathVariable Long id){
+
+        movieService.deleteByID(id);
     }
 
 
