@@ -15,6 +15,8 @@
       <h5>{{ this.movieInsideDetails.description }}</h5>
     </div>
     <b-button class="btn" @click="showMovieDetailsFunction">Back</b-button>
+        <b-button class="btn" @click="deleteMovie">Delete</b-button>
+
   </div>
 </template>
 
@@ -31,6 +33,7 @@ export default {
   data() {
     return {
       movieInsideDetails: {
+        id: null,
         movieName: "",
         description: "",
         rating: null,
@@ -44,6 +47,10 @@ export default {
   methods: {
       showMovieDetailsFunction() {
       this.$emit("showMovieLibrary");
+    },
+    deleteMovie() {
+      console.log("In movieDetails ID is "+this.movieInsideDetails.id);
+      this.$emit("deleteEvt",this.movieInsideDetails.id);
     },
   }
 };

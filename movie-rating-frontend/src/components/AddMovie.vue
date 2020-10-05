@@ -1,5 +1,5 @@
-<template >
-  <div id="addmovie" >
+<template>
+  <div id="addmovie">
     <h1 id="textTop">Add Movie To Library</h1>
     <div class="search">
       <input
@@ -127,11 +127,18 @@ export default {
 
     onSubmit(evt) {
       evt.preventDefault();
+
       this.$axios.post("http://192.168.1.13:8085/movie", this.form, {
         headers: {
           "Content-Type": "application/json",
         },
       });
+      // Reset our form values
+      this.form.movieName = "";
+      this.form.description = "";
+      this.form.rating = null;
+      this.form.genre = [];
+      this.searchResponseMovie = [];
     },
     onReset(evt) {
       evt.preventDefault();
@@ -157,7 +164,6 @@ export default {
 }
 
 #textTop {
-text-decoration: blue;
+  text-decoration: blue;
 }
-
 </style>
