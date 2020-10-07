@@ -1,13 +1,13 @@
 3<template>
   <div class="container" style="text-align: center">
-    <h1>Movie Library</h1>
+    <h1 >Movie Library</h1>
     <!-- <div>
       <input type="text" placeholder="Search By Name" v-model="searchName" />
       <b-button size="sm" @click="searchByName">Search By Name</b-button>
     </div> -->
     
 
-    <div class="container">
+    <div class="library-search ">
       <b-form inline label="Genre:" label-for="input-1">
         <input
           type="text"
@@ -97,4 +97,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style >
+.library-search {
+  
+  margin-left: 20em;
+}
+</style>

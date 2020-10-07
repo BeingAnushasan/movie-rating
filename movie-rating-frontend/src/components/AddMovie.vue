@@ -1,5 +1,5 @@
 <template>
-  <div id="addmovie">
+  <div id="addmovie" >
     <h1 id="textTop">Add Movie To Library</h1>
     <div class="search">
       <input
@@ -10,44 +10,55 @@
       />
       <b-button type="submit" @click="searchByName">Search</b-button>
 
-      <ul>
-        <li
-          @click="fillTheForm(movie, $event)"
-          v-for="movie in searchResponseMovie.slice(0, 5)"
-          :key="movie.id"
-        >
-          {{ movie.title }} : {{ movie.release_date }}
-        </li>
-      </ul>
+      <div class="floatingRectangle" v-if=" showSearchResult && searchResponseMovie.length">
+        <ul>
+          <li
+            @click="fillTheForm(movie, $event)"
+            v-for="movie in searchResponseMovie.slice(0, 5)"
+            :key="movie.id"
+          >
+            {{ movie.title }} : {{ movie.release_date }}
+          </li>
+        </ul>
+      </div>
     </div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group id="input-group-1" label-for="input-1" description="">
-        <b-form-input
-          id="input-1"
-          class="mb-2 mr-sm-2 mb-sm-0"
-          v-model="form.movieName"
-          type="text"
-          required
-          placeholder="Movie Name"
-        ></b-form-input>
-      </b-form-group>
+    <b-form class="my-form" @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-form inline>
+        <b-form-group id="input-group-1" label-for="input-1" description="">
+          <b-form-input
+            id="input-1"
+            class="mb-2 mr-sm-2 mb-sm-0"
+            style="width: 20em"
+            v-model="form.movieName"
+            type="text"
+            required
+            placeholder="Movie Name"
+          ></b-form-input>
+        </b-form-group>
 
-      <b-form-group id="input-group-2" label="Description:" label-for="input-2">
-        <b-form-input
+        <b-form-group id="input-group-3" label="" label-for="input-3">
+          <b-form-select
+            id="input-3"
+            class="rating"
+            v-model="form.rating"
+            :options="ratings"
+            required
+          ></b-form-select>
+        </b-form-group>
+      </b-form>
+
+      <b-form-group
+        id="input-group-2"
+        label-align="left"
+        label=""
+        label-for="input-2"
+      >
+        <b-form-textarea
           id="input-2"
           v-model="form.description"
           required
           placeholder="Description"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-3" label="Ratings:" label-for="input-3">
-        <b-form-select
-          id="input-3"
-          v-model="form.rating"
-          :options="ratings"
-          required
-        ></b-form-select>
+        ></b-form-textarea>
       </b-form-group>
 
       <b-form-group id="input-group-4" label="Genre:">
@@ -102,6 +113,7 @@ export default {
       showJSONBool: false,
       searchName: null,
       searchResponseMovie: [],
+      showSearchResult: false,
     };
   },
   methods: {
@@ -111,6 +123,7 @@ export default {
     },
     fillTheForm(movie, evt) {
       evt.preventDefault();
+      this.showSearchResult = !this.showSearchResult;
       this.form.movieName = movie.title;
       this.form.description = movie.overview.substring(0, 255);
       this.form.posterLink = movie.poster_path;
@@ -122,6 +135,7 @@ export default {
             this.searchName
         )
         .then((response) => (this.searchResponseMovie = response.data.results));
+        this.showSearchResult = true;
       // .then(this.form.movieName = this.searchResponseMovie.Title);
     },
 
@@ -163,7 +177,27 @@ export default {
   text-align: center;
 }
 
-#textTop {
-  text-decoration: blue;
+.my-form {
+  width: 50em;
+  margin: auto;
+}
+.rating {
+  width: 10em;
+  margin-right: 0em;
+}
+.floatingRectangle {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* bottom: 20px; */
+
+  /* height: 100px; */
+
+  background-color: cadetblue;
+  color: white;
+  align-self: center;
+
+  /* padding: 0; */
 }
 </style>
