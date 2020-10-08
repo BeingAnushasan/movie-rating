@@ -1,5 +1,5 @@
 <template>
-  <div id="addmovie" >
+  <div id="addmovie">
     <h1 id="textTop">Add Movie To Library</h1>
     <div class="search">
       <input
@@ -10,7 +10,10 @@
       />
       <b-button type="submit" @click="searchByName">Search</b-button>
 
-      <div class="floatingRectangle" v-if=" showSearchResult && searchResponseMovie.length">
+      <div
+        class="floatingRectangle"
+        v-if="showSearchResult && searchResponseMovie.length"
+      >
         <ul>
           <li
             @click="fillTheForm(movie, $event)"
@@ -36,7 +39,17 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-3" label="" label-for="input-3">
+        <b-form-input
+          id="range"
+          type="range"
+          class="rating"
+          v-model="form.rating"
+          min="0"
+          max="10"
+          step="0.1"
+        ></b-form-input>
+        {{ this.form.rating }}*
+        <!-- <b-form-group id="input-group-3" label="" label-for="input-3">
           <b-form-select
             id="input-3"
             class="rating"
@@ -44,7 +57,7 @@
             :options="ratings"
             required
           ></b-form-select>
-        </b-form-group>
+        </b-form-group> -->
       </b-form>
 
       <b-form-group
@@ -81,6 +94,7 @@
       <b-button type="submit" variant="primary">Add To Libary</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
+
     <div class="mt-3">
       <b-button size="sm" variant="primary" @click="showJSON"
         >Show JSON</b-button
@@ -135,7 +149,7 @@ export default {
             this.searchName
         )
         .then((response) => (this.searchResponseMovie = response.data.results));
-        this.showSearchResult = true;
+      this.showSearchResult = true;
       // .then(this.form.movieName = this.searchResponseMovie.Title);
     },
 
@@ -182,7 +196,7 @@ export default {
   margin: auto;
 }
 .rating {
-  width: 10em;
+  width: 25em;
   margin-right: 0em;
 }
 .floatingRectangle {

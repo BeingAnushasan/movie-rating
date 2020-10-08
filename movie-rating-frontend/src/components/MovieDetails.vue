@@ -3,17 +3,18 @@
     <h1>
       <strong style="text-decoration-color: blue">{{
         this.movieInsideDetails.movieName
-      }}</strong
-      >
+      }}</strong>
       <strong
         ><b-form-rating
-          style="width: 10em; margin: auto; "
+          style="width: 17em; margin: auto; "
           v-model="this.movieInsideDetails.rating"
           variant="warning"
+          stars="10"
           class="mb-2"
           readonly
           no-border
           size="sm"
+          show-value
         ></b-form-rating
       ></strong>
     </h1>
