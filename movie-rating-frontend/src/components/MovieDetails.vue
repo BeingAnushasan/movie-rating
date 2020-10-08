@@ -1,8 +1,21 @@
 <template>
   <div class="container">
     <h1>
-      <strong style="text-decoration-color: blue">{{ this.movieInsideDetails.movieName }}</strong
-      >/ <strong>{{ this.movieInsideDetails.rating }}</strong>
+      <strong style="text-decoration-color: blue">{{
+        this.movieInsideDetails.movieName
+      }}</strong
+      >
+      <strong
+        ><b-form-rating
+          style="width: 10em; margin: auto; "
+          v-model="this.movieInsideDetails.rating"
+          variant="warning"
+          class="mb-2"
+          readonly
+          no-border
+          size="sm"
+        ></b-form-rating
+      ></strong>
     </h1>
 
     <div class="movieInfo">
@@ -15,8 +28,7 @@
       <h5>{{ this.movieInsideDetails.description }}</h5>
     </div>
     <b-button class="btn" @click="showMovieDetailsFunction">Back</b-button>
-        <b-button class="btn" @click="deleteMovie">Delete</b-button>
-
+    <b-button class="btn" @click="deleteMovie">Delete</b-button>
   </div>
 </template>
 
@@ -45,13 +57,13 @@ export default {
   },
 
   methods: {
-      showMovieDetailsFunction() {
+    showMovieDetailsFunction() {
       this.$emit("showMovieLibrary");
     },
     deleteMovie() {
-      console.log("In movieDetails ID is "+this.movieInsideDetails.id);
-      this.$emit("deleteEvt",this.movieInsideDetails.id);
+      console.log("In movieDetails ID is " + this.movieInsideDetails.id);
+      this.$emit("deleteEvt", this.movieInsideDetails.id);
     },
-  }
+  },
 };
 </script>

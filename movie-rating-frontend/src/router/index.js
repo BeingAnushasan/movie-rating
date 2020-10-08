@@ -22,6 +22,11 @@ Vue.use(VueRouter)
     path: '/library',
     name: 'Library',
     component: () => import(/* webpackChunkName: "about" */ '../views/Library.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   }
 ]
 
