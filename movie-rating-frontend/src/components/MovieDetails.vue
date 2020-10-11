@@ -3,8 +3,7 @@
     <h1>
       <strong style="text-decoration-color: blue">{{
         this.movieInsideDetails.movieName
-      }}</strong
-      >
+      }}</strong>
       <strong
         ><b-form-rating
           style="width: 10em; margin: auto; "
@@ -61,7 +60,6 @@ export default {
       this.$emit("showMovieLibrary");
     },
     deleteMovie() {
-      console.log("In movieDetails ID is " + this.movieInsideDetails.id);
       this.$emit("deleteEvt", this.movieInsideDetails.id);
     },
   },

@@ -1,12 +1,14 @@
 <template>
   <div id="addmovie" >
     <h1 id="textTop">Add Movie To Library</h1>
+    <button @click="$store.commit('increment')"> Increment {{$store.state.count}}</button>
     <div class="search">
       <input
         type="text"
         placeholder="Search"
         v-model="searchName"
         @input="searchByName"
+        required
       />
       <b-button type="submit" @click="searchByName">Search</b-button>
 
@@ -129,14 +131,16 @@ export default {
       this.form.posterLink = movie.poster_path;
     },
     searchByName() {
-      this.$axios
-        .get(
-          "https://api.themoviedb.org/3/search/movie?api_key=f69685ff175d2d4f542c2d6001185d43&page=1&query=" +
-            this.searchName
-        )
-        .then((response) => (this.searchResponseMovie = response.data.results));
-        this.showSearchResult = true;
-      // .then(this.form.movieName = this.searchResponseMovie.Title);
+      if(this.searchName != null){
+        this.$axios
+          .get(
+            "https://api.themoviedb.org/3/search/movie?api_key=f69685ff175d2d4f542c2d6001185d43&page=1&query=" +
+              this.searchName
+          )
+          .then((response) => (this.searchResponseMovie = response.data.results));
+          this.showSearchResult = true;
+      }
+      else alert("Enter Search Name")
     },
 
     onSubmit(evt) {
