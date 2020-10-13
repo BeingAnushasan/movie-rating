@@ -7,15 +7,16 @@
           type="text"
           placeholder="Search By Name"
           v-model="searchName"
-          @input="searchInMyDB"
+          @input="searchInMyDB($event)"
         />
 
         <b-form-select
           v-model="searchGenreName"
           :options="genres"
+          
           calss="mb-3"
         ></b-form-select>
-        <b-button size="sm" @click="searchInMyDB">Search</b-button>
+        <b-button size="sm" @click="searchInMyDB($event)">Search</b-button>
       </b-form>
     </div>
 
@@ -47,7 +48,7 @@ export default {
     return {
       movies: null,
       genres: [
-        { text: "Genre", value: null },
+        { text: "Genre", value: null,disabled: true },
         { text: "Action", value: "Action" },
         { text: "Drama", value: "Drama" },
         { text: "Romance", value: "Romance" },
@@ -57,19 +58,22 @@ export default {
       ],
 
       searchName: null,
-      searchGenreName: "",
-
+      searchGenreName: null,
+      event: "",
       imageLink: "",
     };
   },
 
   methods: {
-    searchInMyDB() {
-      API.getMoviesFromMyDB(this.searchName, this.searchGenreName)
-         .then((response) => (this.movies = response.data));
-      // this.searchName = "";
-      console.log(this.searchName)
-      // this.searchGenreName = "";
+    searchInMyDB(evt) {
+      API.getMoviesFromMyDB(this.searchName, this.searchGenreName).then(
+        (response) => (this.movies = response.data)
+      );
+
+      if (evt.type === "click") {
+        this.searchName = "";
+        this.searchGenreName = "";
+      }
     },
 
     showMovieDetailsFunction(movie) {

@@ -1,9 +1,9 @@
 <template>
   <div id="addmovie">
     <h1 id="textTop">Add Movie To Library</h1>
-    <button @click="$store.commit('increment')">
+    <!-- <button @click="$store.commit('increment')">
       Increment {{ $store.state.count }}
-    </button>
+    </button> -->
     <div class="search">
       <input
         type="text"
@@ -16,12 +16,12 @@
 
       <div
         class="floatingRectangle"
-        v-if="showSearchResult && searchResponseMovie.length"
+        v-if="showSearchResult && theMovieDBResponse.length"
       >
         <ul>
           <li
             @click="fillTheForm(movie, $event)"
-            v-for="movie in searchResponseMovie.slice(0, 5)"
+            v-for="movie in theMovieDBResponse.slice(0, 5)"
             :key="movie.id"
           >
             {{ movie.title }} : {{ movie.release_date }}
@@ -29,6 +29,8 @@
         </ul>
       </div>
     </div>
+    <br />
+
     <b-form class="my-form" @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form inline>
         <b-form-group id="input-group-1" label-for="input-1" description="">
@@ -104,8 +106,14 @@
       <b-button size="sm" variant="primary" @click="showJSON"
         >Show JSON</b-button
       >
-      <b-card header="Form Data Result" v-if="showJSONBool">
-        <pre class="m-0">{{ form }}</pre>
+      <b-card
+        header="Form Data Result"
+        v-if="showJSONBool"
+        bg-variant="dark"
+        text-variant="white"
+        class="text-center "
+      >
+        <pre class="m-0" style="color: white;">{{ form }}</pre>
       </b-card>
     </div>
   </div>
@@ -125,7 +133,7 @@ export default {
         posterLink: null,
         genre: [],
       },
-      searchResponseMovie: [],
+      theMovieDBResponse: [],
       searchName: null,
 
       show: true,
@@ -137,7 +145,7 @@ export default {
     searchByName() {
       if (this.searchName != null) {
         API.searchByNameTheMovieDB(this.searchName).then(
-          (response) => (this.searchResponseMovie = response.data.results)
+          (response) => (this.theMovieDBResponse = response.data.results)
         );
         this.showSearchResult = true;
       } else alert("Enter Search Name");
@@ -163,7 +171,7 @@ export default {
       evt.preventDefault();
       this.showSearchResult = false;
       this.form.movieName = movie.title;
-      this.form.description = movie.overview;//.substring(0, 255);
+      this.form.description = movie.overview; //.substring(0, 255);
       this.form.posterLink = movie.poster_path;
     },
 
@@ -171,9 +179,11 @@ export default {
       this.form.movieName = "";
       this.form.description = "";
       this.form.rating = null;
+      this.form.posterLink = "",
       this.form.genre = [];
 
-      this.searchResponseMovie = [];
+      this.theMovieDBResponse = [];
+      this.searchName = "";
     },
     showJSON(evt) {
       evt.preventDefault();
@@ -208,6 +218,7 @@ export default {
   background-color: cadetblue;
   color: white;
   align-self: center;
+  
 
   /* padding: 0; */
 }

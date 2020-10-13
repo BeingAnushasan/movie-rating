@@ -10,10 +10,10 @@
         <b-form-group id="input-group-1" label-for="input-1">
           <b-form-input
             id="input-1"
-            v-model="form.email"
-            type="email"
+            v-model="form.username"
+            type="text"
             required
-            placeholder="Enter email"
+            placeholder="Enter username"
           ></b-form-input>
         </b-form-group>
 
@@ -32,24 +32,31 @@
         <b-button type="reset" variant="danger">SignUp</b-button>
       </b-form>
     </b-card>
+    <b-button @click="sayHello">say hello</b-button>
   </div>
 </template>
 
 <script>
+import API from "../resources/API";
+
 export default {
   data() {
     return {
       form: {
-        email: "",
+        username: "",
         password: "",
       },
       show: true,
     };
   },
   methods: {
+    sayHello() {
+      API.sayHello();
+    },
     onSubmit(evt) {
       evt.preventDefault();
       alert(JSON.stringify(this.form));
+      API.authenticate(this.form)
     },
     onReset(evt) {
       evt.preventDefault();
