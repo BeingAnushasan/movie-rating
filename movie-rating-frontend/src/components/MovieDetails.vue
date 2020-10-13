@@ -6,13 +6,16 @@
       }}</strong>
       <strong
         ><b-form-rating
-          style="width: 10em; margin: auto; "
-          v-model="this.movieInsideDetails.rating"
+          style="width: 18em; margin: auto; "
+          v-model="movieInsideDetails.rating"
           variant="warning"
           class="mb-2"
           readonly
           no-border
+          stars="10"
           size="sm"
+          show-value
+          show-value-max
         ></b-form-rating
       ></strong>
     </h1>

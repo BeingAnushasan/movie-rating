@@ -1,7 +1,9 @@
 <template>
-  <div id="addmovie" >
+  <div id="addmovie">
     <h1 id="textTop">Add Movie To Library</h1>
-    <button @click="$store.commit('increment')"> Increment {{$store.state.count}}</button>
+    <button @click="$store.commit('increment')">
+      Increment {{ $store.state.count }}
+    </button>
     <div class="search">
       <input
         type="text"
@@ -12,7 +14,10 @@
       />
       <b-button type="submit" @click="searchByName">Search</b-button>
 
-      <div class="floatingRectangle" v-if=" showSearchResult && searchResponseMovie.length">
+      <div
+        class="floatingRectangle"
+        v-if="showSearchResult && searchResponseMovie.length"
+      >
         <ul>
           <li
             @click="fillTheForm(movie, $event)"
@@ -39,13 +44,25 @@
         </b-form-group>
 
         <b-form-group id="input-group-3" label="" label-for="input-3">
-          <b-form-select
+          <b-form-input
+            id="input-3"
+            class="mb-2 mr-sm-2 mb-sm-0"
+            style="width: 20em"
+            v-model="form.rating"
+            type="number"
+            min="1"
+            max="10.1"
+            step="0.5"
+            required
+            placeholder="Movie Rating"
+          ></b-form-input>
+          <!-- <b-form-select
             id="input-3"
             class="rating"
             v-model="form.rating"
             :options="ratings"
             required
-          ></b-form-select>
+          ></b-form-select> -->
         </b-form-group>
       </b-form>
 
@@ -96,7 +113,7 @@
 
 <script>
 // import axios from "axios";
-
+import API from "../resources/API";
 export default {
   name: "AddMovie",
   data() {
@@ -108,69 +125,59 @@ export default {
         posterLink: null,
         genre: [],
       },
-      // genres: [{id:1, value: "Action"} , "Drama", "Romance", "Comedy", "Horror", "Si-fi"],
-      // genres: [{id:1, value: "Action"} 33, {id:2, value: "Drama"} , {id:3, value: "Romance"} , {id:4, value: "Comedy"} , {id:6, value: "Horror"} , {id:6, value: "Si-fi"} ],
-      ratings: [{ text: "Your Rating", value: null }, "1", "2", "3", "4", "5"],
+      searchResponseMovie: [],
+      searchName: null,
+
       show: true,
       showJSONBool: false,
-      searchName: null,
-      searchResponseMovie: [],
       showSearchResult: false,
     };
   },
   methods: {
-    showJSON(evt) {
-      evt.preventDefault();
-      this.showJSONBool = !this.showJSONBool;
-    },
-    fillTheForm(movie, evt) {
-      evt.preventDefault();
-      this.showSearchResult = !this.showSearchResult;
-      this.form.movieName = movie.title;
-      this.form.description = movie.overview.substring(0, 255);
-      this.form.posterLink = movie.poster_path;
-    },
     searchByName() {
-      if(this.searchName != null){
-        this.$axios
-          .get(
-            "https://api.themoviedb.org/3/search/movie?api_key=f69685ff175d2d4f542c2d6001185d43&page=1&query=" +
-              this.searchName
-          )
-          .then((response) => (this.searchResponseMovie = response.data.results));
-          this.showSearchResult = true;
-      }
-      else alert("Enter Search Name")
+      if (this.searchName != null) {
+        API.searchByNameTheMovieDB(this.searchName).then(
+          (response) => (this.searchResponseMovie = response.data.results)
+        );
+        this.showSearchResult = true;
+      } else alert("Enter Search Name");
     },
 
     onSubmit(evt) {
       evt.preventDefault();
-
-      this.$axios.post("http://192.168.1.13:8085/movie", this.form, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      API.saveMovieInMyDB(this.form);
       // Reset our form values
-      this.form.movieName = "";
-      this.form.description = "";
-      this.form.rating = null;
-      this.form.genre = [];
-      this.searchResponseMovie = [];
+      this.resetForm();
     },
     onReset(evt) {
       evt.preventDefault();
       // Reset our form values
-      this.form.movieName = "";
-      this.form.description = "";
-      this.form.rating = null;
-      this.form.genre = [];
-      this.searchResponseMovie = [];
+      this.resetForm();
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    fillTheForm(movie, evt) {
+      evt.preventDefault();
+      this.showSearchResult = false;
+      this.form.movieName = movie.title;
+      this.form.description = movie.overview;//.substring(0, 255);
+      this.form.posterLink = movie.poster_path;
+    },
+
+    resetForm() {
+      this.form.movieName = "";
+      this.form.description = "";
+      this.form.rating = null;
+      this.form.genre = [];
+
+      this.searchResponseMovie = [];
+    },
+    showJSON(evt) {
+      evt.preventDefault();
+      this.showJSONBool = !this.showJSONBool;
     },
   },
 };
