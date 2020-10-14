@@ -1,9 +1,7 @@
 <template>
   <div id="addmovie">
     <h1 id="textTop">Add Movie To Library</h1>
-    <!-- <button @click="$store.commit('increment')">
-      Increment {{ $store.state.count }}
-    </button> -->
+    <button @click="increment">Increment {{ $store.state.count }}</button>
     <div class="search">
       <input
         type="text"
@@ -142,6 +140,9 @@ export default {
     };
   },
   methods: {
+    increment() {
+      this.$store.commit("increment");
+    },
     searchByName() {
       if (this.searchName != null) {
         API.searchByNameTheMovieDB(this.searchName).then(
@@ -179,8 +180,7 @@ export default {
       this.form.movieName = "";
       this.form.description = "";
       this.form.rating = null;
-      this.form.posterLink = "",
-      this.form.genre = [];
+      (this.form.posterLink = ""), (this.form.genre = []);
 
       this.theMovieDBResponse = [];
       this.searchName = "";
@@ -218,7 +218,6 @@ export default {
   background-color: cadetblue;
   color: white;
   align-self: center;
-  
 
   /* padding: 0; */
 }

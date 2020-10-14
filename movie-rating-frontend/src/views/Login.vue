@@ -49,6 +49,7 @@ export default {
       show: true,
     };
   },
+
   methods: {
     sayHello() {
       API.sayHello();
@@ -57,6 +58,12 @@ export default {
       evt.preventDefault();
       alert(JSON.stringify(this.form));
       API.authenticate(this.form)
+        .then((response) =>
+          localStorage.setItem("token", JSON.stringify(response.data.jwt))
+        )
+        .then(this.$store.commit("loggedIn"))
+        .then(alert("Logged In Successful"));
+        
     },
     onReset(evt) {
       evt.preventDefault();
@@ -68,8 +75,7 @@ export default {
 <style scoped>
 .login-card {
   z-index: 2;
-  margin-top: 100em;
-  width: 30em;
+  width: 80%;
   margin: auto;
 }
 </style>
