@@ -1,39 +1,69 @@
 <template>
-  <div class="login-card">
-    <b-card
-      bg-variant="dark"
-      header="LOGIN"
-      text-variant="white"
-      class="text-center "
-    >
-      <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-group id="input-group-1" label-for="input-1">
-          <b-form-input
-            id="input-1"
-            v-model="form.username"
-            type="text"
-            required
-            placeholder="Enter username"
-          ></b-form-input>
-        </b-form-group>
+  <div class="container">
+    <br />
 
-        <b-form-group id="input-group-2" label-for="input-2">
-          <b-form-input
-            id="input-2"
-            type="password"
-            v-model="form.password"
-            required
-            placeholder="Password"
-          ></b-form-input>
-        </b-form-group>
+    <div class="card bg-light">
+      <article class="card-body mx-auto" style="max-width: 400px;">
+        <h4 class="card-title mt-3 text-center">Log In</h4>
 
-        <b-button type="submit" variant="primary">Login</b-button>
+        <form>
+          <!-- form-group// -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fa fa-envelope"></i>
+              </span>
+            </div>
+            <input
+              name=""
+              class="form-control"
+              placeholder="Email address or Username"
+              type="text"
+            />
+          </div>
 
-        <b-button type="reset" variant="danger">SignUp</b-button>
-      </b-form>
-    </b-card>
-    <b-button @click="sayHello">say hello</b-button>
+          <!-- form-group end.// -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fa fa-lock"></i>
+              </span>
+            </div>
+            <input
+              class="form-control"
+              placeholder=" password"
+              type="password"
+            />
+          </div>
+
+          <!-- form-group// -->
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">
+              Log In
+            </button>
+          </div>
+          <!-- form-group// -->
+          <p class="text-center">
+            Have an account? <a href="/signup">SignUp</a>
+          </p>
+        </form>
+        <p class="divider-text">
+          <span class="bg-light">OR</span>
+        </p>
+        <p>Login With</p>
+        <p>
+          <a href="" class="btn btn-block btn-twitter">
+            <i class="fab fa-twitter"></i> Twitter</a
+          >
+          <a href="" class="btn btn-block btn-facebook">
+            <i class="fab fa-facebook-f"></i> facebook</a
+          >
+        </p>
+      </article>
+    </div>
+    <!-- card.// -->
   </div>
+  <!--container end.//-->
 </template>
 
 <script>
@@ -63,19 +93,44 @@ export default {
         )
         .then(this.$store.commit("loggedIn"))
         .then(alert("Logged In Successful"));
-        
     },
     onReset(evt) {
       evt.preventDefault();
+      this.$router.to("SignUp");
     },
   },
 };
 </script>
 
-<style scoped>
-.login-card {
+<style>
+.divider-text {
+  position: relative;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.divider-text span {
+  padding: 7px;
+  font-size: 12px;
+  position: relative;
   z-index: 2;
-  width: 80%;
-  margin: auto;
+}
+.divider-text:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  top: 55%;
+  left: 0;
+  z-index: 1;
+}
+
+.btn-facebook {
+  background-color: #405d9d;
+  color: #fff;
+}
+.btn-twitter {
+  background-color: #42aeec;
+  color: #fff;
 }
 </style>
