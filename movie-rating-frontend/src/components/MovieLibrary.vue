@@ -1,21 +1,22 @@
 3<template>
   <div class="container" style="text-align: center">
-    <h1 >Movie Library</h1>
+    <h1>Movie Library</h1>
     <div class="library-search ">
       <b-form inline label="Genre:" label-for="input-1">
         <input
           type="text"
           placeholder="Search By Name"
           v-model="searchName"
-          @input="searchByName"
+          @input="searchInMyDB($event)"
         />
 
         <b-form-select
           v-model="searchGenreName"
           :options="genres"
+          
           calss="mb-3"
         ></b-form-select>
-        <b-button size="sm" @click="searchByGenre">Search</b-button>
+        <b-button size="sm" @click="searchInMyDB($event)">Search</b-button>
       </b-form>
     </div>
 
@@ -32,21 +33,22 @@
 </template>
 
 <script>
+import API from "../resources/API";
+
 export default {
   name: "MovieLibrary",
 
   mounted() {
-    this.$axios
-      .get("http://192.168.1.13:8085/movie")
-      //  .then(response => console.log(response))
-      .then((response) => (this.movies = response.data));
+    API.getAllMoviesFromMyDB().then(
+      (response) => (this.movies = response.data)
+    );
   },
 
   data: function() {
     return {
       movies: null,
       genres: [
-        { text: "Genre", value: null },
+        { text: "Genre", value: null,disabled: true },
         { text: "Action", value: "Action" },
         { text: "Drama", value: "Drama" },
         { text: "Romance", value: "Romance" },
@@ -56,32 +58,22 @@ export default {
       ],
 
       searchName: null,
-      searchGenreName: "",
-
+      searchGenreName: null,
+      event: "",
       imageLink: "",
     };
   },
 
   methods: {
-    searchByName() {
-      this.$axios
-        .get("http://192.168.1.13:8085/search?name=" + this.searchName)
-        //  .then(response => console.log(response))
-        .then((response) => (this.movies = response.data))
-        .then(console.log(this.movies));
-    },
+    searchInMyDB(evt) {
+      API.getMoviesFromMyDB(this.searchName, this.searchGenreName).then(
+        (response) => (this.movies = response.data)
+      );
 
-    searchByGenre() {
-      this.$axios
-        .get(
-          "http://192.168.1.13:8085/search?genre=" +
-            this.searchGenreName +
-            "&name=" +
-            this.searchName
-        )
-        .then((response) => (this.movies = response.data));
-      this.searchName = "";
-      this.searchGenreName = "";
+      if (evt.type === "click") {
+        this.searchName = "";
+        this.searchGenreName = "";
+      }
     },
 
     showMovieDetailsFunction(movie) {
@@ -91,9 +83,8 @@ export default {
 };
 </script>
 
-<style >
+<style>
 .library-search {
-  
   margin-left: 20em;
 }
 </style>

@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 public class BasicMovieController {
 
     final MovieServiceImpl movieService;
+
     public BasicMovieController( MovieServiceImpl movieService ){
         this.movieService = movieService;
     }
@@ -42,9 +43,9 @@ public class BasicMovieController {
     }
 
     @DeleteMapping("/movie/{id}")
-    public void deleteMovie(@PathVariable Long id){
+    public void deleteMovie( @PathVariable Long id ){
 
-        movieService.deleteByID(id);
+        movieService.deleteByID( id );
     }
 
 

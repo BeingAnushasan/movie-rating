@@ -1,6 +1,6 @@
 <template>
     <div>
-        <MovieIteam/>
+        <MovieIteam v-if="$store.state.isLoggedIn"/>
     </div>
 </template>
 

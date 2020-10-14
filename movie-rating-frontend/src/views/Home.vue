@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-if="$store.state.isLoggedIn">
     <AddMovie  class="container"/>
   </div>
 </template>

@@ -1,23 +1,29 @@
 <template>
   <div id="addmovie">
     <h1 id="textTop">Add Movie To Library</h1>
+    <button @click="increment">Increment {{ $store.state.count }}</button>
     <div class="search">
       <input
         type="text"
         placeholder="Search"
         v-model="searchName"
         @input="searchByName"
+        required
       />
       <b-button type="submit" @click="searchByName">Search</b-button>
 
       <div
         class="floatingRectangle"
+<<<<<<< HEAD
         v-if="showSearchResult && searchResponseMovie.length"
+=======
+        v-if="showSearchResult && theMovieDBResponse.length"
+>>>>>>> working
       >
         <ul>
           <li
             @click="fillTheForm(movie, $event)"
-            v-for="movie in searchResponseMovie.slice(0, 5)"
+            v-for="movie in theMovieDBResponse.slice(0, 5)"
             :key="movie.id"
           >
             {{ movie.title }} : {{ movie.release_date }}
@@ -25,6 +31,8 @@
         </ul>
       </div>
     </div>
+    <br />
+
     <b-form class="my-form" @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form inline>
         <b-form-group id="input-group-1" label-for="input-1" description="">
@@ -39,6 +47,7 @@
           ></b-form-input>
         </b-form-group>
 
+<<<<<<< HEAD
         <b-form-input
           id="range"
           type="range"
@@ -51,13 +60,34 @@
         {{ this.form.rating }}*
         <!-- <b-form-group id="input-group-3" label="" label-for="input-3">
           <b-form-select
+=======
+        <b-form-group id="input-group-3" label="" label-for="input-3">
+          <b-form-input
+            id="input-3"
+            class="mb-2 mr-sm-2 mb-sm-0"
+            style="width: 20em"
+            v-model="form.rating"
+            type="number"
+            min="1"
+            max="10.1"
+            step="0.5"
+            required
+            placeholder="Movie Rating"
+          ></b-form-input>
+          <!-- <b-form-select
+>>>>>>> working
             id="input-3"
             class="rating"
             v-model="form.rating"
             :options="ratings"
             required
+<<<<<<< HEAD
           ></b-form-select>
         </b-form-group> -->
+=======
+          ></b-form-select> -->
+        </b-form-group>
+>>>>>>> working
       </b-form>
 
       <b-form-group
@@ -99,8 +129,14 @@
       <b-button size="sm" variant="primary" @click="showJSON"
         >Show JSON</b-button
       >
-      <b-card header="Form Data Result" v-if="showJSONBool">
-        <pre class="m-0">{{ form }}</pre>
+      <b-card
+        header="Form Data Result"
+        v-if="showJSONBool"
+        bg-variant="dark"
+        text-variant="white"
+        class="text-center "
+      >
+        <pre class="m-0" style="color: white;">{{ form }}</pre>
       </b-card>
     </div>
   </div>
@@ -108,7 +144,7 @@
 
 <script>
 // import axios from "axios";
-
+import API from "../resources/API";
 export default {
   name: "AddMovie",
   data() {
@@ -120,29 +156,20 @@ export default {
         posterLink: null,
         genre: [],
       },
-      // genres: [{id:1, value: "Action"} , "Drama", "Romance", "Comedy", "Horror", "Si-fi"],
-      // genres: [{id:1, value: "Action"} 33, {id:2, value: "Drama"} , {id:3, value: "Romance"} , {id:4, value: "Comedy"} , {id:6, value: "Horror"} , {id:6, value: "Si-fi"} ],
-      ratings: [{ text: "Your Rating", value: null }, "1", "2", "3", "4", "5"],
+      theMovieDBResponse: [],
+      searchName: null,
+
       show: true,
       showJSONBool: false,
-      searchName: null,
-      searchResponseMovie: [],
       showSearchResult: false,
     };
   },
   methods: {
-    showJSON(evt) {
-      evt.preventDefault();
-      this.showJSONBool = !this.showJSONBool;
-    },
-    fillTheForm(movie, evt) {
-      evt.preventDefault();
-      this.showSearchResult = !this.showSearchResult;
-      this.form.movieName = movie.title;
-      this.form.description = movie.overview.substring(0, 255);
-      this.form.posterLink = movie.poster_path;
+    increment() {
+      this.$store.commit("increment");
     },
     searchByName() {
+<<<<<<< HEAD
       this.$axios
         .get(
           "https://api.themoviedb.org/3/search/movie?api_key=f69685ff175d2d4f542c2d6001185d43&page=1&query=" +
@@ -151,36 +178,52 @@ export default {
         .then((response) => (this.searchResponseMovie = response.data.results));
       this.showSearchResult = true;
       // .then(this.form.movieName = this.searchResponseMovie.Title);
+=======
+      if (this.searchName != null) {
+        API.searchByNameTheMovieDB(this.searchName).then(
+          (response) => (this.theMovieDBResponse = response.data.results)
+        );
+        this.showSearchResult = true;
+      } else alert("Enter Search Name");
+>>>>>>> working
     },
 
     onSubmit(evt) {
       evt.preventDefault();
-
-      this.$axios.post("http://192.168.1.13:8085/movie", this.form, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      API.saveMovieInMyDB(this.form);
       // Reset our form values
-      this.form.movieName = "";
-      this.form.description = "";
-      this.form.rating = null;
-      this.form.genre = [];
-      this.searchResponseMovie = [];
+      this.resetForm();
     },
     onReset(evt) {
       evt.preventDefault();
       // Reset our form values
-      this.form.movieName = "";
-      this.form.description = "";
-      this.form.rating = null;
-      this.form.genre = [];
-      this.searchResponseMovie = [];
+      this.resetForm();
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    fillTheForm(movie, evt) {
+      evt.preventDefault();
+      this.showSearchResult = false;
+      this.form.movieName = movie.title;
+      this.form.description = movie.overview; //.substring(0, 255);
+      this.form.posterLink = movie.poster_path;
+    },
+
+    resetForm() {
+      this.form.movieName = "";
+      this.form.description = "";
+      this.form.rating = null;
+      (this.form.posterLink = ""), (this.form.genre = []);
+
+      this.theMovieDBResponse = [];
+      this.searchName = "";
+    },
+    showJSON(evt) {
+      evt.preventDefault();
+      this.showJSONBool = !this.showJSONBool;
     },
   },
 };

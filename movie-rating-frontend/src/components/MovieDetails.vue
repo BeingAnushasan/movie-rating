@@ -6,8 +6,8 @@
       }}</strong>
       <strong
         ><b-form-rating
-          style="width: 17em; margin: auto; "
-          v-model="this.movieInsideDetails.rating"
+          style="width: 18em; margin: auto; "
+          v-model="movieInsideDetails.rating"
           variant="warning"
           stars="10"
           class="mb-2"
@@ -15,6 +15,7 @@
           no-border
           size="sm"
           show-value
+          show-value-max
         ></b-form-rating
       ></strong>
     </h1>
@@ -62,7 +63,6 @@ export default {
       this.$emit("showMovieLibrary");
     },
     deleteMovie() {
-      console.log("In movieDetails ID is " + this.movieInsideDetails.id);
       this.$emit("deleteEvt", this.movieInsideDetails.id);
     },
   },
