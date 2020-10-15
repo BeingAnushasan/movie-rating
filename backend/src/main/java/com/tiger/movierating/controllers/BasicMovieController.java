@@ -20,6 +20,12 @@ public class BasicMovieController {
         this.movieService = movieService;
     }
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello There";
+    }
+
+
     @GetMapping("/movie")
     public List<Movie> getAllMovies(){
         List<Movie> movieList = movieService.findAll();

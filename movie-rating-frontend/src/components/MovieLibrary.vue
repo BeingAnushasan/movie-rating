@@ -1,34 +1,40 @@
-3<template>
-  <div class="container" style="text-align: center">
-    <h1>Movie Library</h1>
-    <div class="library-search ">
-      <b-form inline label="Genre:" label-for="input-1">
-        <input
-          type="text"
-          placeholder="Search By Name"
-          v-model="searchName"
-          @input="searchInMyDB($event)"
-        />
+<template>
+  <div class="container">
+    <div class="card bg-light">
+      <h1>Movie Library</h1>
+      <b-container>
+        <b-row class="justify-content-md-center">
+          <b-col cols="12" md="auto">
+            <input
+              type="text"
+              placeholder="Search By Name"
+              v-model="searchName"
+              @input="searchInMyDB($event)"
+            />
+          </b-col>
+          <b-col>
+            <b-form-select
+              v-model="searchGenreName"
+              :options="genres"
+              calss="mb-3"
+            ></b-form-select>
+          </b-col>
+          <b-col>
+            <b-button size="sm" @click="searchInMyDB($event)">Search</b-button>
+          </b-col>
+        </b-row>
+      </b-container>
 
-        <b-form-select
-          v-model="searchGenreName"
-          :options="genres"
-          
-          calss="mb-3"
-        ></b-form-select>
-        <b-button size="sm" @click="searchInMyDB($event)">Search</b-button>
-      </b-form>
+      <ul>
+        <li
+          v-for="movie in movies"
+          :key="movie.id"
+          @click="showMovieDetailsFunction(movie)"
+        >
+          {{ movie.movieName }}
+        </li>
+      </ul>
     </div>
-
-    <ul>
-      <li
-        v-for="movie in movies"
-        :key="movie.id"
-        @click="showMovieDetailsFunction(movie)"
-      >
-        {{ movie.movieName }}
-      </li>
-    </ul>
   </div>
 </template>
 
@@ -48,7 +54,7 @@ export default {
     return {
       movies: null,
       genres: [
-        { text: "Genre", value: null,disabled: true },
+        { text: "Genre", value: null, disabled: true },
         { text: "Action", value: "Action" },
         { text: "Drama", value: "Drama" },
         { text: "Romance", value: "Romance" },
@@ -82,9 +88,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.library-search {
-  margin-left: 20em;
-}
-</style>
