@@ -15,6 +15,12 @@ export default {
   components: {
     TheHeader,
   },
+  mounted() {
+    if (localStorage.getItem("token")) {
+      this.$store.commit("loggedIn");
+    }
+    console.log(localStorage.getItem("token"));
+  },
 };
 </script>
 
@@ -25,7 +31,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-
 }
 
 #nav {
