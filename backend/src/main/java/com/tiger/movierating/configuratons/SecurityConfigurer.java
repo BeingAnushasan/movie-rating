@@ -38,7 +38,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter implements 
         http.csrf().disable()
                 .cors()
                 .and()
-                .authorizeRequests().antMatchers( "/authenticate" ).permitAll()
+                .authorizeRequests()
+                .antMatchers( "/authenticate/login" ).permitAll()
+                .antMatchers( "/authenticate/signup" ).permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy( SessionCreationPolicy.STATELESS );

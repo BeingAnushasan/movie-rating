@@ -1,10 +1,12 @@
-package com.tiger.movierating.controllers;
+package com.tiger.movierating.controllers.security;
 
 import com.tiger.movierating.models.Auth.AuthReq;
 import com.tiger.movierating.models.Auth.AuthRes;
+import com.tiger.movierating.models.UserDetails.User;
 import com.tiger.movierating.services.MyUserDetailsService;
 import com.tiger.movierating.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/authenticate")
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -24,13 +27,14 @@ public class AuthController {
     @Autowired
     private JWTUtil jwtUtil;
 
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hello There";
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public ResponseEntity<?> createUser( @RequestBody User user ){
+        System.out.println("Signup request for: "+user);
+        userDetailsService.createUser( user );
+        return new ResponseEntity( HttpStatus.CREATED );
     }
 
-
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken( @RequestBody AuthReq authReq ) throws Exception{
         System.out.println( authReq.getUsername() );
         try {
@@ -49,4 +53,6 @@ public class AuthController {
         System.out.println( authreqResponseEntity );
         return authreqResponseEntity;
     }
+
+
 }
