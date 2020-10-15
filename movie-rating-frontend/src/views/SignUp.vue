@@ -19,6 +19,7 @@
               class="form-control"
               placeholder="Full name"
               type="text"
+              v-model="form.fullName"
             />
           </div>
           <!-- form-group// -->
@@ -33,6 +34,7 @@
               class="form-control"
               placeholder="Email address"
               type="email"
+              v-model="form.email"
             />
           </div>
           <!-- form-group// -->
@@ -53,6 +55,7 @@
               class="form-control"
               placeholder="Phone number"
               type="text"
+              v-model="form.phoneNumber"
             />
           </div>
           <!-- form-group// -->
@@ -67,6 +70,7 @@
               class="form-control"
               placeholder="Username"
               type="text"
+              v-model="form.username"
             />
           </div>
           <!-- form-group end.// -->
@@ -80,6 +84,7 @@
               class="form-control"
               placeholder="Create password"
               type="password"
+              v-model="form.password"
             />
           </div>
           <!-- form-group// -->
@@ -93,11 +98,16 @@
               class="form-control"
               placeholder="Repeat password"
               type="password"
+              v-model="repeatPassword"
             />
           </div>
           <!-- form-group// -->
           <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">
+            <button
+              type="submit"
+              class="btn btn-primary btn-block"
+              @click="signUp($event)"
+            >
               Create Account
             </button>
           </div>
@@ -118,7 +128,42 @@
 </template>
 
 <script>
-export default {};
+import API from "../resources/API";
+export default {
+  data() {
+    return {
+      form: {
+        fullName: null,
+        email: null,
+        phoneNumber: null,
+        username: null,
+        password: null,
+        enabled: null,
+        accountNonExpired: null,
+        credentialsNonExpired: null,
+        accountNonLocked: null,
+        movies: [],
+        roles: [],
+      },
+
+      repeatPassword: null,
+    };
+  },
+  methods: {
+    signUp(evt) {
+      evt.preventDefault();
+      alert(JSON.stringify(this.form));
+      if (this.form.password === this.repeatPassword) {
+        API.signUp(this.form).catch(function(error) {
+          console.log("Show error notification!: " + error);
+          return Promise.reject(error);
+        });
+      } else {
+        alert("Password didnot match!");
+      }
+    },
+  },
+};
 </script>
 
 <style>

@@ -15,6 +15,7 @@
               </span>
             </div>
             <input
+              v-model="form.username"
               name=""
               class="form-control"
               placeholder="Email address or Username"
@@ -32,21 +33,24 @@
             <input
               class="form-control"
               placeholder=" password"
+              v-model="form.password"
               type="password"
             />
           </div>
 
           <!-- form-group// -->
           <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">
+            <button
+              type="submit"
+              @click="onSubmit($event)"
+              class="btn btn-primary btn-block"
+            >
               Log In
             </button>
           </div>
           <!-- form-group// -->
-          <p class="text-center">
-            Have an account? <a href="/signup">SignUp</a>
-          </p>
         </form>
+        <p class="text-center">Have an account? <a href="/signup">SignUp</a></p>
         <p class="divider-text">
           <span class="bg-light">OR</span>
         </p>
@@ -92,7 +96,11 @@ export default {
           localStorage.setItem("token", JSON.stringify(response.data.jwt))
         )
         .then(this.$store.commit("loggedIn"))
-        .then(alert("Logged In Successful"));
+        .catch(function(error) {
+          console.log("Show error notification!: " + error);
+          return Promise.reject(error);
+        });
+      // .then(alert("Logged In Successful"));
     },
     onReset(evt) {
       evt.preventDefault();

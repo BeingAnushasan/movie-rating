@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     //Global states
     isLoggedIn: false,
+    token: localStorage.getItem("token") || "",
 
     // for AddMovie component
     TheMovieDBResult: [],
