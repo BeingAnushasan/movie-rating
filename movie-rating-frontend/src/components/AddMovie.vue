@@ -72,7 +72,8 @@
           label-for="input-2"
         >
           <b-form-textarea
-            id="input-2"
+            id="input-2 "
+            max-length
             v-model="form.description"
             required
             placeholder="Description"
@@ -130,7 +131,7 @@ export default {
         rating: null,
         posterLink: null,
         genre: [],
-        mu_fk: "1",
+        owner: "",
       },
       theMovieDBResponse: [],
       searchName: null,
@@ -140,6 +141,9 @@ export default {
       showSearchResult: false,
     };
   },
+  // mounted: {
+  //   owner = 
+  // },
   methods: {
     increment() {
       this.$store.commit("increment");
@@ -173,7 +177,7 @@ export default {
       evt.preventDefault();
       this.showSearchResult = false;
       this.form.movieName = movie.title;
-      this.form.description = movie.overview; //.substring(0, 255);
+      this.form.description = movie.overview.substring(0, 255);
       this.form.posterLink = movie.poster_path;
     },
 
@@ -212,14 +216,8 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
-  /* bottom: 20px; */
-
-  /* height: 100px; */
-
   background-color: cadetblue;
   color: white;
   align-self: center;
-
-  /* padding: 0; */
 }
 </style>

@@ -8,9 +8,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    //Global states
+    //Global  control states
     isLoggedIn: false,
     token: localStorage.getItem("token") || "",
+
+    // User Data
+    username: "",
 
     // for AddMovie component
     TheMovieDBResult: [],

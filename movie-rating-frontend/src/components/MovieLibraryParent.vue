@@ -5,7 +5,7 @@
     v-bind:movie="movieInsideDetails" 
     @deleteEvt="deleteMovieByID"
     @showMovieLibrary="showMovieDetailsFunction"/>
-    <MovieLibrary
+    <MyMovieList
       v-if="showMovieLibrary"
       @showMovieDetail="showMovieDetailsFunction"
     />
@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import MovieLibrary from "./MovieLibrary";
+import MyMovieList from "./MyMovieList";
 import MovieDetails from "./MovieDetails";
 
 export default {
   name: "MovieItem",
   components: {
-    MovieLibrary,
+    MyMovieList,
     MovieDetails,
   },
 

@@ -1,15 +1,15 @@
 <template>
     <div>
-        <MovieIteam v-if="$store.state.isLoggedIn"/>
+        <MovieLibraryParent v-if="$store.state.isLoggedIn"/>
     </div>
 </template>
 
 <script>
-    import MovieIteam from "../components/MovieItem"
+    import MovieLibraryParent from "../components/MovieLibraryParent"
     export default {
         name: "Library",
         components: {
-            MovieIteam,
+            MovieLibraryParent,
         }
     }
 </script>
