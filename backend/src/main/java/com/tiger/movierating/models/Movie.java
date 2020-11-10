@@ -38,7 +38,7 @@ public class Movie {
    private String description;
    private String posterLink;
 
-   private Long userId;
+   private String owner;
 //   @OneToOne
 ////   @JoinColumn(name = "mu_fk", referencedColumnName = "id")
 //   private User user;

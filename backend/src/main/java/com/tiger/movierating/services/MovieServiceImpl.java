@@ -1,9 +1,12 @@
 package com.tiger.movierating.services;
 
 import com.tiger.movierating.models.Movie;
+import com.tiger.movierating.models.UserDetails.User;
 import com.tiger.movierating.repos.*;
+import com.tiger.movierating.util.CurrentUserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,27 +14,29 @@ import java.util.Optional;
 
 @Service
 public class MovieServiceImpl {
-    @Autowired
-    UserRepo userRepo;
+
+    final UserRepo userRepo;
     final MovieRepo movieRepo;
 
 
-    public MovieServiceImpl( MovieRepo movieRepo ){
+    public MovieServiceImpl( MovieRepo movieRepo, UserRepo userRepo ){
         this.movieRepo = movieRepo;
+        this.userRepo = userRepo;
     }
 
 
     public Movie create( Movie movie ){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println( "The esc context returned: "+principal );
+        String username = new CurrentUserProvider().getUsername();
+        movie.setOwner( username );
         return movieRepo.save( movie );
-//        userRepo.save( movie );
     }
 
 
-    public List<Movie> findAll(Long id){
-//        return movieRepo.findAll();
-        return  movieRepo.findByUserId(id);
+    public List<Movie> findAll(){
+        String username = new CurrentUserProvider().getUsername();
+        System.out.println( "The security context returned: " + username );
+//        User byUsername = userRepo.findByUsername( username );
+        return movieRepo.findByOwner( username );
     }
 
     public Optional<Movie> findOneByID( Long id ){
