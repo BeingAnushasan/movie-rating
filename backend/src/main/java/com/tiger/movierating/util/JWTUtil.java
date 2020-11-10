@@ -14,7 +14,7 @@ import java.util.function.Function;
 @Service
 public class JWTUtil {
 
-    private String SECRET_KEY = "key101010";
+    private final String SECRET_KEY = "key101010";
 
 
     public String generateToken( UserDetails userDetails ){

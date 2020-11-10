@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface MovieRepo extends JpaRepository<Movie, Long> {
@@ -16,4 +15,7 @@ public interface MovieRepo extends JpaRepository<Movie, Long> {
 
     @Query("SELECT m FROM Movie m Where m.movieName LIKE %:name% ")
     List<Movie>findByMovieName(@Param("name") String name );
+
+    @Query("SELECT m FROM Movie m Where m.userId LIKE %:id% ")
+    List<Movie> findByUserId(@Param("id") Long id);
 }

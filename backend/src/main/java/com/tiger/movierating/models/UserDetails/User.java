@@ -4,6 +4,7 @@ import com.tiger.movierating.models.Movie;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +32,6 @@ public class User implements Serializable {
     private String password;
 
 
-
     @Column(name = "enabled")
     private boolean enabled;
     @Column(name = "accountNonExpired")
@@ -41,18 +42,20 @@ public class User implements Serializable {
     private boolean accountNonLocked;
 
 
-//    @JoinTable(name = "movies_user", joinColumns = {
+//        @JoinTable(name = "movies_user", joinColumns = {
 //            @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
 //            @JoinColumn(name = "movie_id", referencedColumnName = "id")})
-    @ManyToMany(targetEntity=Movie.class, fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-    private List<Movie> movies;
+//    @OneToMany(targetEntity = Movie.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "um_fk", referencedColumnName = "id")
+//    //    @OneToMany(mappedBy = "user")
+//    private List<Movie> movies;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "role_user", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "role_id", referencedColumnName = "id")})
-    private List<Role> roles;
-
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "role_user", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "role_id", referencedColumnName = "id")})
+//    private List<Role> roles;
+//
 
 
 }

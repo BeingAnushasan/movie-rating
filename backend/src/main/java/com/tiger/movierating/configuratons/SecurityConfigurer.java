@@ -22,11 +22,14 @@ import java.util.Arrays;
 
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
-    @Autowired
-    private MyUserDetailsService myUserDetailService;
+    private final MyUserDetailsService myUserDetailService;
 
-    @Autowired
-    private JWTRequestFilter jwtRequestFilter;
+    private final JWTRequestFilter jwtRequestFilter;
+
+    public SecurityConfigurer( MyUserDetailsService myUserDetailService, JWTRequestFilter jwtRequestFilter ){
+        this.myUserDetailService = myUserDetailService;
+        this.jwtRequestFilter = jwtRequestFilter;
+    }
 
     @Override
     protected void configure( AuthenticationManagerBuilder auth ) throws Exception{
@@ -39,7 +42,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter implements 
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/authenticate/*" ).permitAll()
+                .antMatchers( "/security/*" ).permitAll()
 //                .antMatchers( "/authenticate/signup" ).permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()

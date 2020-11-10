@@ -1,14 +1,10 @@
 package com.tiger.movierating.services;
 
 import com.tiger.movierating.repos.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,8 +12,11 @@ import java.util.ArrayList;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    UserRepo userRepo;
+    final UserRepo userRepo;
+
+    public MyUserDetailsService( UserRepo userRepo ){
+        this.userRepo = userRepo;
+    }
 
     public com.tiger.movierating.models.UserDetails.User createUser( com.tiger.movierating.models.UserDetails.User user ){
         return userRepo.save( user );

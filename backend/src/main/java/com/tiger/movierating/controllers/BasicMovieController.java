@@ -2,6 +2,8 @@ package com.tiger.movierating.controllers;
 
 import com.tiger.movierating.models.Movie;
 import com.tiger.movierating.services.MovieServiceImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.stream.Stream;
 
 @RestController
 @CrossOrigin
+@Transactional
 public class BasicMovieController {
 
     final MovieServiceImpl movieService;
@@ -28,14 +31,17 @@ public class BasicMovieController {
 
     @GetMapping("/movie")
     public List<Movie> getAllMovies(){
-        List<Movie> movieList = movieService.findAll();
-        return movieList;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println( "The security context returned: "+principal );
+        return movieService.findAll( 0L );
     }
 
     @PostMapping("/movie")
     public void printReceivedData( @RequestBody Movie payload ){
+
         System.out.println( "Saving to Database" + payload );
         movieService.create( payload );
+
     }
 
     @GetMapping("/search")

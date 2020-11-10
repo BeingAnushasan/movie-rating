@@ -1,18 +1,19 @@
 package com.tiger.movierating.models;
 
 
+import com.tiger.movierating.models.UserDetails.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 public class Movie {
 
@@ -36,5 +37,10 @@ public class Movie {
    private double imdbRating;
    private String description;
    private String posterLink;
+
+   private Long userId;
+//   @OneToOne
+////   @JoinColumn(name = "mu_fk", referencedColumnName = "id")
+//   private User user;
 
 }
