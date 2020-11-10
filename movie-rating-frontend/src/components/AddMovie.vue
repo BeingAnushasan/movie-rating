@@ -130,6 +130,7 @@ export default {
         rating: null,
         posterLink: null,
         genre: [],
+        mu_fk: "1",
       },
       theMovieDBResponse: [],
       searchName: null,

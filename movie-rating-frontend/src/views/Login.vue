@@ -81,6 +81,7 @@ export default {
         password: "",
       },
       show: true,
+      isLoggedIn: this.$store.state.isLoggedIn,
     };
   },
 
@@ -97,10 +98,11 @@ export default {
         )
         .then(this.$store.commit("loggedIn"))
         .catch(function(error) {
-          console.log("Show error notification!: " + error);
-          return Promise.reject(error);
+          console.log("Error message!: " + error);
+          alert("Wrong Username Or Password: " + error);
+
+          // return Promise.reject(error);
         });
-      // .then(alert("Logged In Successful"));
     },
     onReset(evt) {
       evt.preventDefault();

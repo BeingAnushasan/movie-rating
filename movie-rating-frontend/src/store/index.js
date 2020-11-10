@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import router from "../router";
+
 // import API from "../resources/API";
 
 Vue.use(Vuex);
@@ -26,6 +28,12 @@ export default new Vuex.Store({
 
     loggedIn(state) {
       state.isLoggedIn = true;
+      router.push("/home");
+    },
+    signOut(state) {
+      state.isLoggedIn = false;
+      localStorage.removeItem("token");
+      router.push("/login");
     },
   },
   actions: {},

@@ -67,6 +67,7 @@ export default {
       searchGenreName: null,
       event: "",
       imageLink: "",
+      
     };
   },
 

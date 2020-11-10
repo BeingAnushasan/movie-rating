@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default {
   localLink: "http://192.168.1.13:8085",
+  // localLink: "http://localhost:8085",
 
   theMovieDBLink:
     "https://api.themoviedb.org/3/search/movie?api_key=f69685ff175d2d4f542c2d6001185d43&page=1&query=",
@@ -10,7 +11,7 @@ export default {
   authenticate(AuthReq) {
     // this.auth = AuthReq;
 
-    return axios.post(this.localLink + "/authenticate/login", AuthReq, {
+    return axios.post(this.localLink + "/security/login", AuthReq, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -18,7 +19,7 @@ export default {
   },
 
   signUp(userAuthReq) {
-    return axios.post(this.localLink + "/authenticate/signup", userAuthReq, {
+    return axios.post(this.localLink + "/security/signup", userAuthReq, {
       headers: {
         "Content-Type": "application/json",
       },
