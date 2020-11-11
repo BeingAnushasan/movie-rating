@@ -26,8 +26,8 @@ public class MovieServiceImpl {
 
 
     public Movie create( Movie movie ){
-        String username = new CurrentUserProvider().getUsername();
-        movie.setOwner( username );
+//        String username = new CurrentUserProvider().getUsername();
+//        movie.setOwner( username );
         return movieRepo.save( movie );
     }
 
