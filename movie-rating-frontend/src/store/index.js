@@ -1,8 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "../router";
-
-// import API from "../resources/API";
+import AUTH from "../resources/Auth";
 
 Vue.use(Vuex);
 
@@ -10,10 +9,11 @@ export default new Vuex.Store({
   state: {
     //Global  control states
     isLoggedIn: false,
-    token: localStorage.getItem("token") || "",
+    token: "",
 
     // User Data
-    username: "",
+
+    username: "username",
 
     // for AddMovie component
     TheMovieDBResult: [],
@@ -32,11 +32,17 @@ export default new Vuex.Store({
     loggedIn(state) {
       state.isLoggedIn = true;
       router.push("/home");
+      
+    },
+    updateUserInfo(state){
+      state.token = localStorage.getItem("token") || "";
+      state.username = (AUTH.getUserInfo()).sub;
     },
     signOut(state) {
       state.isLoggedIn = false;
       localStorage.removeItem("token");
       router.push("/login");
+      state.username = "";
     },
   },
   actions: {},

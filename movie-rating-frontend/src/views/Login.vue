@@ -97,12 +97,15 @@ export default {
           localStorage.setItem("token", JSON.stringify(response.data.jwt))
         )
         .then(this.$store.commit("loggedIn"))
+        .then(this.$store.commit("updateUserInfo"))
         .catch(function(error) {
           console.log("Error message!: " + error);
           alert("Wrong Username Or Password: " + error);
 
           // return Promise.reject(error);
         });
+        
+
     },
     onReset(evt) {
       evt.preventDefault();
