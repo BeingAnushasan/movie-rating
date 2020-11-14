@@ -121,6 +121,7 @@
 <script>
 // import axios from "axios";
 import API from "../resources/API";
+// import AUTH from "../resources/Auth"
 
 export default {
   name: "AddMovie",
@@ -142,11 +143,7 @@ export default {
       showSearchResult: false,
     };
   },
-  watch: {
-    owner : function(){
-       this.form.owner = this.$store.state.username;
-    }
-  },
+
   methods: {
     increment() {
       this.$store.commit("increment");
@@ -163,6 +160,7 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       // this.form.owner = this.
+      this.form.owner = this.$store.state.username;
       API.saveMovieInMyDB(this.form);
       // Reset our form values
       this.resetForm();
@@ -184,8 +182,9 @@ export default {
       this.form.description = movie.overview; //.substring(0, 255);
       this.form.posterLink = movie.poster_path;
       // this.form.owner = (AUTH.getUserInfo()).sub;
-       console.log("It will print here: "+this.form.owner);
+      this.$store.commit("updateUserInfo");
 
+      console.log("It will print here: " + this.form.owner);
     },
 
     resetForm() {
