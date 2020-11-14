@@ -1,7 +1,6 @@
 package com.tiger.movierating.models;
 
 
-import com.tiger.movierating.models.UserDetails.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

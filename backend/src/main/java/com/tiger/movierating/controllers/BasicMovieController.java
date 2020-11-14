@@ -1,11 +1,6 @@
 package com.tiger.movierating.controllers;
-
 import com.tiger.movierating.models.Movie;
-import com.tiger.movierating.models.UserDetails.User;
 import com.tiger.movierating.services.MovieServiceImpl;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 

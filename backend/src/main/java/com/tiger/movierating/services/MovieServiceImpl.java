@@ -1,12 +1,8 @@
 package com.tiger.movierating.services;
 
 import com.tiger.movierating.models.Movie;
-import com.tiger.movierating.models.UserDetails.User;
 import com.tiger.movierating.repos.*;
 import com.tiger.movierating.util.CurrentUserProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,10 +21,8 @@ public class MovieServiceImpl {
     }
 
 
-    public Movie create( Movie movie ){
-//        String username = new CurrentUserProvider().getUsername();
-//        movie.setOwner( username );
-        return movieRepo.save( movie );
+    public void create( Movie movie ){
+         movieRepo.save( movie );
     }
 
 
