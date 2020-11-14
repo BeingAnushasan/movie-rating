@@ -154,15 +154,27 @@ export default {
       evt.preventDefault();
       alert(JSON.stringify(this.form));
       if (this.form.password === this.repeatPassword) {
-        API.signUp(this.form).catch(function(error) {
-          console.log("Show error notification!: " + error);
-          return Promise.reject(error);
-        });
+        API.signUp(this.form)
+            .then((res) => this.toLogin(res) )
+            .catch(function(error) {
+              console.log("Show error notification!: " + error);
+              return Promise.reject(error);
+            });
       } else {
         alert("Password didnot match!");
       }
     },
+
+    toLogin(res) {
+              if(res.status == 201){
+                  this.$router.push('Login')
+                }
+                else{
+                  alert("Could not signup. Please try again!")
+                }
+    },
   },
+
 };
 </script>
 

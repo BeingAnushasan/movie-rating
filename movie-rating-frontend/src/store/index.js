@@ -11,6 +11,8 @@ export default new Vuex.Store({
     isLoggedIn: false,
     token: "",
 
+    
+
     // User Data
 
     username: "username",

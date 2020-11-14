@@ -132,7 +132,7 @@ export default {
         rating: null,
         posterLink: null,
         genre: [],
-        owner: this.$store.state.username,
+        owner: "",
       },
       theMovieDBResponse: [],
       searchName: null,
@@ -142,9 +142,11 @@ export default {
       showSearchResult: false,
     };
   },
-  // mounted: {
-  //   form.owner : decode(this.$store.state.token)
-  // },
+  watch: {
+    owner : function(){
+       this.form.owner = this.$store.state.username;
+    }
+  },
   methods: {
     increment() {
       this.$store.commit("increment");
@@ -160,7 +162,7 @@ export default {
 
     onSubmit(evt) {
       evt.preventDefault();
-      // this.form.owner = decode(this.$store.state.token);
+      // this.form.owner = this.
       API.saveMovieInMyDB(this.form);
       // Reset our form values
       this.resetForm();
