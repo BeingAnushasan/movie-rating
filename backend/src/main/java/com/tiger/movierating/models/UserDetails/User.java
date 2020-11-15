@@ -50,11 +50,12 @@ public class User implements Serializable {
 //    //    @OneToMany(mappedBy = "user")
 //    private List<Movie> movies;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "role_user", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-//            inverseJoinColumns = {
-//                    @JoinColumn(name = "role_id", referencedColumnName = "id")})
-//    private List<Role> roles;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "role_user", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id", referencedColumnName = "id")})
+//    @ElementCollection
+    private List<Role> roles;
 //
 
 
