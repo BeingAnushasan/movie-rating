@@ -2,7 +2,6 @@ package com.tiger.movierating.services;
 
 import com.tiger.movierating.models.Movie;
 import com.tiger.movierating.repos.*;
-import com.tiger.movierating.util.CurrentUserProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,11 +25,11 @@ public class MovieServiceImpl {
     }
 
 
-    public List<Movie> findAll(){
-        String username = new CurrentUserProvider().getUsername();
-        System.out.println( "The security context returned: " + username );
+    public List<Movie> findAll(String principle){
+//        String username = principle
+//        System.out.println( "The security context returned: " + principle );
 //        User byUsername = userRepo.findByUsername( username );
-        return movieRepo.findByOwner( username );
+        return movieRepo.findByOwner( principle );
     }
 
     public Optional<Movie> findOneByID( Long id ){

@@ -53,9 +53,9 @@ public class AuthController {
 
         final String jwt = jwtUtil.generateToken( userDetails );
 
-        ResponseEntity<AuthRes> authreqResponseEntity = ResponseEntity.ok( new AuthRes( jwt ) );
-        System.out.println( authreqResponseEntity );
-        return authreqResponseEntity;
+        ResponseEntity<AuthRes> authReqResponseEntity = ResponseEntity.ok( new AuthRes( jwt ) );
+        System.out.println( authReqResponseEntity );
+        return authReqResponseEntity;
     }
 
 

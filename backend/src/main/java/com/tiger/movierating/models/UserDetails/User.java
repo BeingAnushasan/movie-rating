@@ -1,6 +1,5 @@
 package com.tiger.movierating.models.UserDetails;
 
-import com.tiger.movierating.models.Movie;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,7 +49,7 @@ public class User implements Serializable {
 //    //    @OneToMany(mappedBy = "user")
 //    private List<Movie> movies;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_user", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {
                     @JoinColumn(name = "role_id", referencedColumnName = "id")})
