@@ -63,8 +63,8 @@ export default {
         { text: "Si-fi", value: "Si-fi" },
       ],
 
-      searchName: null,
-      searchGenreName: null,
+      searchName: "",
+      searchGenreName: "",
       event: "",
       imageLink: "",
       

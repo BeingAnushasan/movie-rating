@@ -23,8 +23,8 @@
 
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
-            <template v-slot:button-content>
-              <em>User</em>
+            <template v-slot:button-content >
+              <em>{{$store.state.username}}</em>
             </template>
             <b-dropdown-item href="#">Profile Settings</b-dropdown-item>
             <b-dropdown-item href="#" @click="signOut($event)"
@@ -42,6 +42,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 export default {
   name: "TheHeader",
+ 
   methods: {
     signOut(evt) {
       evt.preventDefault();

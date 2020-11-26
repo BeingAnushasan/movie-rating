@@ -91,13 +91,13 @@ export default {
     },
     onSubmit(evt) {
       evt.preventDefault();
-      alert(JSON.stringify(this.form));
+      // alert(JSON.stringify(this.form));
       API.authenticate(this.form)
         .then((response) =>
           localStorage.setItem("token", JSON.stringify(response.data.jwt))
         )
-        .then(this.$store.commit("loggedIn"))
-        .then(this.$store.commit("updateUserInfo"))
+        .then(this.$store.dispatch("loggingIn"))
+        // .then(this.$store.commit("updateUserInfo"))
         .catch(function(error) {
           console.log("Error message!: " + error);
           alert("Wrong Username Or Password: " + error);

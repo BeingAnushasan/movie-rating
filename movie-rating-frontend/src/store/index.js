@@ -8,14 +8,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     //Global  control states
+    backend_URL: "http://192.168.1.12:8085",
     isLoggedIn: false,
-    token: "",
-
-    
+   
 
     // User Data
-
-    username: "username",
+    token: "",
+    username: "user-name",
 
     // for AddMovie component
     TheMovieDBResult: [],
@@ -47,6 +46,11 @@ export default new Vuex.Store({
       state.username = "";
     },
   },
-  actions: {},
+  actions: {
+    loggingIn (context){
+        context.commit("loggedIn");
+        context.commit("updateUserInfo");
+    }
+  },
   modules: {},
 });

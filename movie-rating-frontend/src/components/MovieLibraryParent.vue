@@ -40,7 +40,7 @@ export default {
     deleteMovieByID(id) {
       
       console.log("In movieItem ID is "+id);
-      this.$axios.delete("http://192.168.1.5:8085/movie/"+id)
+      this.$axios.delete(this.$store.state.backend_URL+"/movie/"+id)
       this.showMovieDetails = !this.showMovieDetails;
       this.showMovieLibrary = !this.showMovieLibrary;
     }
