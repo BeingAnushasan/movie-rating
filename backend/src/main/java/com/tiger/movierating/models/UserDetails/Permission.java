@@ -14,4 +14,5 @@ public class Permission implements Serializable {
     private Integer id;
     @Column()
     private String name;
+//    private UserPermissions userPermissions;
 }

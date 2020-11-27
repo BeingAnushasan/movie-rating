@@ -1,43 +1,44 @@
 package com.tiger.movierating.models.UserDetails;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.tiger.movierating.models.Movie;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
-@Data
+@Table()
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "fullName")
+    //    @Column(name = "fullName")
     private String fullName;
-    @Column(name = "phoneNumber")
+    //    @Column(name = "phoneNumber")
     private String phoneNumber;
-    @Column(name = "email")
+    //    @Column(name = "email")
     private String email;
-    @Column(name = "username")
+    //    @Column(name = "username")
     private String username;
-    @Column(name = "password")
+    //    @Column(name = "password")
     private String password;
 
 
-    @Column(name = "enabled")
+    //    @Column(name = "enabled")
     private boolean enabled;
-    @Column(name = "accountNonExpired")
+    //    @Column(name = "accountNonExpired")
     private boolean accountNonExpired;
-    @Column(name = "credentialsNonExpired")
+    //    @Column(name = "credentialsNonExpired")
     private boolean credentialsNonExpired;
-    @Column(name = "accountNonLocked")
+    //    @Column(name = "accountNonLocked")
     private boolean accountNonLocked;
 
 
@@ -49,13 +50,14 @@ public class User implements Serializable {
 //    //    @OneToMany(mappedBy = "user")
 //    private List<Movie> movies;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "role_user", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "role_id", referencedColumnName = "id")})
-//    @ElementCollection
-    private List<Role> roles;
-//
+    //    @JoinTable(name = "role_user", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "role_id", referencedColumnName = "id")})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Role> roles = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Movie> movie = new ArrayList<>();
 
 
 }
