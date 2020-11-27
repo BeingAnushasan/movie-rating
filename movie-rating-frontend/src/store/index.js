@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     //Global  control states
-    backend_URL: "http://192.168.1.12:8085",
+    backend_URL: "http://192.168.1.19:8085",
     isLoggedIn: false,
    
 
