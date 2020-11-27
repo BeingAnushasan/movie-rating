@@ -36,10 +36,11 @@ public class BasicMovieController {
     }
 
     @PostMapping("/movie")
-    public void printReceivedData( @RequestBody Movie payload ){
+    public void printReceivedData( @RequestBody Movie payload, Principal principal ){
 
         System.out.println( "Saving to Database" + payload );
-        movieService.create( payload );
+
+        movieService.create( payload, principal );
 
     }
 
@@ -47,13 +48,13 @@ public class BasicMovieController {
     public Object searchByGenre( @RequestParam Map<String, String> requestParams, Principal principal ){
         List<Movie> allMoviesOfCurrentUser = getAllMovies( principal );
         List<Movie> byGenre;
-        List<Movie> byName =  Collections.emptyList();
+        List<Movie> byName = Collections.emptyList();
 
         String name = requestParams.get( "name" );
         String genre = requestParams.get( "genre" );
         System.out.println( "Searching for Name: " + name + " & Genre: " + genre );
         if (genre != "" || name != "") {
-            System.out.println( "Inside  if" );
+//            System.out.println( "Inside  if" );
             byGenre = allMoviesOfCurrentUser.stream().filter(
                     movie -> movie.getGenre().contains( genre ) ).collect(
                     Collectors.toList() );
@@ -64,7 +65,7 @@ public class BasicMovieController {
             }
             return Stream.concat( byName.stream(), byGenre.stream() ).collect( Collectors.toSet() ).toArray();
         } else {
-            System.out.println( "Inside else" );
+//            System.out.println( "Inside else" );
             return allMoviesOfCurrentUser;
         }
 
@@ -72,9 +73,10 @@ public class BasicMovieController {
     }
 
     @DeleteMapping("/movie/{id}")
-    public void deleteMovie( @PathVariable Long id ){
+    public void deleteMovie( @PathVariable Long id , Principal principal){
+        System.out.println( "Deleting movie of id: " + id );
 
-        movieService.deleteByID( id );
+        movieService.deleteByID( id , principal.getName());
     }
 
 

@@ -1,9 +1,12 @@
 package com.tiger.movierating.services;
 
+import com.sun.xml.bind.v2.TODO;
 import com.tiger.movierating.models.Movie;
+import com.tiger.movierating.models.UserDetails.User;
 import com.tiger.movierating.repos.*;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,16 +23,16 @@ public class MovieServiceImpl {
     }
 
 
-    public void create( Movie movie ){
-         movieRepo.save( movie );
+    public void create( Movie movie, Principal principal ){
+        User byUsername = userRepo.findByUsername( principal.getName() );
+        byUsername.getMovie().add( movie );
+        userRepo.save( byUsername );
     }
 
 
-    public List<Movie> findAll(String principle){
-//        String username = principle
-//        System.out.println( "The security context returned: " + principle );
-//        User byUsername = userRepo.findByUsername( username );
-        return movieRepo.findByOwner( principle );
+    public List<Movie> findAll( String principle ){
+        User byUsername = userRepo.findByUsername( principle );
+        return byUsername.getMovie();
     }
 
     public Optional<Movie> findOneByID( Long id ){
@@ -38,7 +41,7 @@ public class MovieServiceImpl {
 
     public Movie update( Long id, Movie movie ){
         if (movieRepo.existsById( id )) {
-            movie.setId( id );
+
             return movieRepo.save( movie );
         } else return movie;
     }
@@ -60,7 +63,13 @@ public class MovieServiceImpl {
         return movieRepo.findByMovieName( name );
     }
 
-    public void deleteByID( Long id ){
-        movieRepo.deleteById( id );
+    public void deleteByID( Long id , String username){
+        User byUsername = userRepo.findByUsername( username );
+        byUsername.getMovie().stream().filter( movie -> {
+            if (movie.getId() == id){
+//                TODO: delete movie by id
+            }
+        } )
+//        movieRepo.deleteById( id );
     }
 }
