@@ -20,7 +20,7 @@ import java.util.Set;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
-     PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
     final UserRepo userRepo;
 
     public MyUserDetailsService( UserRepo userRepo ){
@@ -39,14 +39,14 @@ public class MyUserDetailsService implements UserDetailsService {
         com.tiger.movierating.models.UserDetails.User byUsername = userRepo.findByUsername( s );
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for(UserRoles userRoles : byUsername.getUserRoles()){
+        for (UserRoles userRoles : byUsername.getUserRoles()) {
             Set<UserPermissions> permissions = userRoles.getPermissions();
             authorities.addAll( permissions );
         }
 
-        System.out.println("Roles are :"+ authorities);
+        System.out.println( "Roles are :" + authorities );
 
-        return new User( byUsername.getUsername(), byUsername.getPassword(), authorities);
+        return new User( byUsername.getUsername(), byUsername.getPassword(), authorities );
     }
 
 

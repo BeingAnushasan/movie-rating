@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +52,7 @@ public class BasicMovieController {
         String name = requestParams.get( "name" );
         String genre = requestParams.get( "genre" );
         System.out.println( "Searching for Name: " + name + " & Genre: " + genre );
-        if (genre != "" || name != "") {
+        if (!genre.equals( "" ) || !name.equals( "" )) {
 //            System.out.println( "Inside  if" );
             byGenre = allMoviesOfCurrentUser.stream().filter(
                     movie -> movie.getGenre().contains( genre ) ).collect(
@@ -73,10 +72,9 @@ public class BasicMovieController {
     }
 
     @DeleteMapping("/movie/{id}")
-    public void deleteMovie( @PathVariable Long id , Principal principal){
+    public void deleteMovie( @PathVariable Long id, Principal principal ){
         System.out.println( "Deleting movie of id: " + id );
-
-        movieService.deleteByID( id , principal.getName());
+        movieService.deleteByID( id, principal.getName() );
     }
 
 

@@ -19,6 +19,6 @@ public interface MovieRepo extends JpaRepository<Movie, Long> {
 //    @Query("SELECT m FROM Movie m Where m.userId LIKE %:id% ")
 //    List<Movie> findByUserId(@Param("id") Long id);
 
-    @Query("SELECT m FROM Movie m Where m.owner LIKE %:username% ")
-    List<Movie> findByOwner( @Param("username") String username );
+//    @Query("SELECT m FROM Movie m Where m.owner LIKE %:username% ")
+//    List<Movie> findByOwner( @Param("username") String username );
 }

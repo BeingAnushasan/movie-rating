@@ -22,12 +22,12 @@ public class JWTUtil {
 //        Set<String> authorities = userDetails.getAuthorities().stream()
 //                .map( GrantedAuthority::getAuthority ).collect( Collectors.toSet());
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-        System.out.println("roles in claim: "+authorities);
+        System.out.println( "roles in claim: " + authorities );
         claims.put( "authorities", authorities );
         return createToken( claims, userDetails.getUsername() );
     }
 
-    private String createToken( Map<String, Object> claims, String subject){
+    private String createToken( Map<String, Object> claims, String subject ){
 
         return Jwts.builder()
                 .setClaims( claims )

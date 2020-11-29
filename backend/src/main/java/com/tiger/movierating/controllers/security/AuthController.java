@@ -34,7 +34,7 @@ public class AuthController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> createUser( @RequestBody User user ){
-        System.out.println("Signup request for: "+user);
+        System.out.println( "Signup request for: " + user );
         user.getUserRoles().add( UserRoles.role_USER );
         userDetailsService.createUser( user );
         return new ResponseEntity( HttpStatus.CREATED );
