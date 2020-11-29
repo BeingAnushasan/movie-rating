@@ -3,6 +3,7 @@ package com.tiger.movierating.services;
 import com.sun.xml.bind.v2.TODO;
 import com.tiger.movierating.models.Movie;
 import com.tiger.movierating.models.UserDetails.User;
+import com.tiger.movierating.models.UserDetails.UserPermissions;
 import com.tiger.movierating.repos.*;
 import org.springframework.stereotype.Service;
 

@@ -3,6 +3,7 @@ package com.tiger.movierating.controllers.security;
 import com.tiger.movierating.models.Auth.AuthReq;
 import com.tiger.movierating.models.Auth.AuthRes;
 import com.tiger.movierating.models.UserDetails.User;
+import com.tiger.movierating.models.UserDetails.UserRoles;
 import com.tiger.movierating.services.MyUserDetailsService;
 import com.tiger.movierating.util.JWTUtil;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ public class AuthController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> createUser( @RequestBody User user ){
         System.out.println("Signup request for: "+user);
+        user.getUserRoles().add( UserRoles.role_USER );
         userDetailsService.createUser( user );
         return new ResponseEntity( HttpStatus.CREATED );
     }

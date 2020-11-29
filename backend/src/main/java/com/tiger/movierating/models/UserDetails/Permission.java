@@ -5,8 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table()
+//@Entity
+//@Table()
 @Data
 public class Permission implements Serializable {
     @Id

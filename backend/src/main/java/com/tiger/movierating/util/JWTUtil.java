@@ -19,8 +19,9 @@ public class JWTUtil {
 
     public String generateToken( UserDetails userDetails ){
         Map<String, Object> claims = new HashMap<>();
-        Set<String> authorities = userDetails.getAuthorities().stream()
-                .map( GrantedAuthority::getAuthority ).collect( Collectors.toSet());
+//        Set<String> authorities = userDetails.getAuthorities().stream()
+//                .map( GrantedAuthority::getAuthority ).collect( Collectors.toSet());
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         System.out.println("roles in claim: "+authorities);
         claims.put( "authorities", authorities );
         return createToken( claims, userDetails.getUsername() );

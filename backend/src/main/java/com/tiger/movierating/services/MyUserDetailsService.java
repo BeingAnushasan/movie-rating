@@ -1,11 +1,11 @@
 package com.tiger.movierating.services;
 
-import com.tiger.movierating.models.UserDetails.Permission;
-import com.tiger.movierating.models.UserDetails.Role;
+
+import com.tiger.movierating.models.UserDetails.UserPermissions;
+import com.tiger.movierating.models.UserDetails.UserRoles;
 import com.tiger.movierating.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,11 +15,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
-    PasswordEncoder passwordEncoder;
+     PasswordEncoder passwordEncoder;
     final UserRepo userRepo;
 
     public MyUserDetailsService( UserRepo userRepo ){
@@ -35,16 +36,12 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername( String s ) throws UsernameNotFoundException{
 
-//        return new User( "admin", "admin", new ArrayList<>() );
         com.tiger.movierating.models.UserDetails.User byUsername = userRepo.findByUsername( s );
-        System.out.println( "Loaded user by username is: " + byUsername );
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for(Role role : byUsername.getRoles()){
-            List<Permission> permissions = role.getPermissions();
-            for (Permission permission: permissions){
-                authorities.add( new SimpleGrantedAuthority( permission.getName() ) );
-            }
+        for(UserRoles userRoles : byUsername.getUserRoles()){
+            Set<UserPermissions> permissions = userRoles.getPermissions();
+            authorities.addAll( permissions );
         }
 
         System.out.println("Roles are :"+ authorities);

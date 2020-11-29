@@ -6,7 +6,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table()
@@ -53,11 +55,13 @@ public class User implements Serializable {
     //    @JoinTable(name = "role_user", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
 //            inverseJoinColumns = {
 //                    @JoinColumn(name = "role_id", referencedColumnName = "id")})
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Role> roles = new ArrayList<>();
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private List<Role> roles = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Movie> movie = new ArrayList<>();
 
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    Set<UserRoles> userRoles = new HashSet<>();
 }
