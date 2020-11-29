@@ -40,7 +40,12 @@ export default {
     deleteMovieByID(id) {
       
       console.log("In movieItem ID is "+id);
-      this.$axios.delete(this.$store.state.backend_URL+"/movie/"+id)
+      this.$axios.delete(this.$store.state.backend_URL+"/movie/"+id,
+      {
+        headers: {
+          Authorization: "Bearer " + JSON.parse(localStorage.getItem(`token`)),
+        },
+      })
       this.showMovieDetails = !this.showMovieDetails;
       this.showMovieLibrary = !this.showMovieLibrary;
     }

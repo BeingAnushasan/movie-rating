@@ -65,11 +65,8 @@ public class MovieServiceImpl {
 
     public void deleteByID( Long id , String username){
         User byUsername = userRepo.findByUsername( username );
-        byUsername.getMovie().stream().filter( movie -> {
-            if (movie.getId() == id){
-//                TODO: delete movie by id
-            }
-        } )
+        byUsername.getMovie().removeIf( movie -> movie.getId().equals( id ) );
+        userRepo.save( byUsername );
 //        movieRepo.deleteById( id );
     }
 }
