@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 
 public enum UserPermissions implements GrantedAuthority {
+    create_USER,
     update_USER,
     delete_USER,
     view_USER,

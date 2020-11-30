@@ -1,9 +1,10 @@
 import axios from "axios";
-// import store from "../store/index";
+import store from "../store/index";
 
 export default {
-  // localLink: store.state.backend_URL,
-  localLink: "http://localhost:8085",
+  localLink: store.state.backend_URL,
+  // localLink: "http://localhost:8085",
+
 
   theMovieDBLink:
     "https://api.themoviedb.org/3/search/movie?api_key=f69685ff175d2d4f542c2d6001185d43&page=1&query=",
