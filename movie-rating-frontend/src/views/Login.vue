@@ -72,6 +72,8 @@
 
 <script>
 import API from "../resources/API";
+import decode from "jwt-decode";
+
 
 export default {
   data() {
@@ -93,10 +95,15 @@ export default {
       evt.preventDefault();
       // alert(JSON.stringify(this.form));
       API.authenticate(this.form)
-        .then((response) =>
-          localStorage.setItem("token", JSON.stringify(response.data.jwt))
-        )
-        .then(this.$store.dispatch("loggingIn"))
+        .then((response) => {
+          const token = response.data.jwt;
+          const username = decode(token).sub;
+          // console.log("the token is: "+token+" And the username is: "+username);
+          localStorage.setItem("token", JSON.stringify(token));
+          this.$store.dispatch("loggingIn",{ token, username} );
+
+        })
+        // .then(this.$store.dispatch("loggingIn"))
         // .then(this.$store.commit("updateUserInfo"))
         .catch(function(error) {
           console.log("Error message!: " + error);
@@ -104,8 +111,6 @@ export default {
 
           // return Promise.reject(error);
         });
-        
-
     },
     onReset(evt) {
       evt.preventDefault();

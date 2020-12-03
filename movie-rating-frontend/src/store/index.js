@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "../router";
-import AUTH from "../resources/Auth";
+// import AUTH from "../resources/Auth";
 
 Vue.use(Vuex);
 
@@ -35,9 +35,9 @@ export default new Vuex.Store({
       router.push("/home");
       
     },
-    updateUserInfo(state){
-      state.token = localStorage.getItem("token") || "";
-      state.username = (AUTH.getUserInfo()).sub;
+    updateUserInfo(state, info){
+      state.token = info.token || "";
+      state.username = info.username;
     },
     signOut(state) {
       state.isLoggedIn = false;
@@ -47,9 +47,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    loggingIn (context){
+    loggingIn (context, info){
         context.commit("loggedIn");
-        context.commit("updateUserInfo");
+        context.commit("updateUserInfo", info);
     }
   },
   modules: {},
