@@ -50,7 +50,7 @@
           </div>
           <!-- form-group// -->
         </form>
-        <p class="text-center">Have an account? <a href="/signup">SignUp</a></p>
+        <p class="text-center">Have an account? <router-link to="/signup">SignUp</router-link></p>
         <p class="divider-text">
           <span class="bg-light">OR</span>
         </p>
